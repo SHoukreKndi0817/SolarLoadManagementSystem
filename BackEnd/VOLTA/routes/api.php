@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\AdminAddController;
+use App\Http\Controllers\Application\TechnicalExpert\CreateClient;
 use App\Http\Controllers\DashBoard\AdmimTechnicalCRUDController;
 use App\Http\Controllers\DashBoard\AdminEmployCRUDController;
 
@@ -45,4 +46,9 @@ Route::middleware('auth:sanctum', 'CheckUserRole:super_admin')->controller(Admin
     Route::post('Dash/EditAdminData', 'EditAdminData');
     Route::post('Dash/DeactivateAdmin', 'DeactivateAdmin');
     Route::post('Dash/ActivateAdmin', 'ActivateAdmin');
+});
+
+Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')->controller(CreateClient::class)->group(function () {
+    Route::post('Phone/AddClientAccount', 'AddClientAccount');
+    Route::post('Phone/ShowClientYouAdd', 'ShowClientYouAdd');
 });

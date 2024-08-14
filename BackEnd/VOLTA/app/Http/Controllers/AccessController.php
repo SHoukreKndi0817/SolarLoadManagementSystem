@@ -69,6 +69,9 @@ class AccessController extends Controller
                 if (!$user->is_active) {
                     return response()->json(["msg" => "Your account has been deactivated by the company"], 403, [], JSON_PRETTY_PRINT);
                 }
+                //-----------------
+                $user->tokens()->delete();
+                //------------------
                 $type = $user->role;
                 $token = $user->createToken($type . " " . " access token", [$type])->plainTextToken;
                 $user->token = $token;

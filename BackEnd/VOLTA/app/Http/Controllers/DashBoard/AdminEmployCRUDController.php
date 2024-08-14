@@ -10,6 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class AdminEmployCRUDController extends Controller
 {
+
+    //-----------------------------------------------------------
     public function AddAdminAccount(Request $request)
     {
 
@@ -38,7 +40,7 @@ class AdminEmployCRUDController extends Controller
         }
     }
 
-
+    //---------------------------------------------------
     public function ShowAllAdmin()
     {
         try {
@@ -55,6 +57,9 @@ class AdminEmployCRUDController extends Controller
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
+
+
     //-----------------------------------------------------------
     public function ShowAdmin(Request $request)
     {
@@ -77,6 +82,8 @@ class AdminEmployCRUDController extends Controller
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
+
 
     //--------------------------------------------------------
     public function EditAdminData(Request $request)
