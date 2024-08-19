@@ -13,7 +13,7 @@ class Socket extends Authenticatable
     use HasFactory, HasApiTokens;
 
     protected $primaryKey = 'socket_id';
-    protected $filabel = [
+    protected $fillable  = [
         'socket_id',
         'broadcast_device_id',
         'socket_model',

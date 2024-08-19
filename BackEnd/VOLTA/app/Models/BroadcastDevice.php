@@ -14,12 +14,13 @@ class BroadcastDevice extends Authenticatable
     use HasFactory, HasApiTokens;
 
     protected $primaryKey = 'broadcast_device_id';
-    protected $filabel = [
+    protected $fillable  = [
         'broadcast_device_id',
         'model',
         'version',
         'number_of_wired_port',
         'number_of_wireless_port',
+        'mac_address',
         'status',
     ];
     public function SolarSystemInfo()

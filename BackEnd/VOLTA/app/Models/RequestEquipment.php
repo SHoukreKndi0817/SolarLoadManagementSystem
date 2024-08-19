@@ -23,13 +23,13 @@ class RequestEquipment extends Authenticatable
         'number_of_broadcast_device',
         'number_of_port',
         'number_of_socket',
-        'socket_type',
         'panel_id',
         'number_of_panel',
         'battery_id',
         'number_of_battery',
         'inverters_id',
         'additional_equipment',
+        'status',
     ];
 
     public function TechnicalExpert()

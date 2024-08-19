@@ -30,13 +30,13 @@ class TechnicalExpert extends Authenticatable
     protected $hidden = ['password'];
 
 
-    public function Admin()
-    {
-        return $this->belongsTo(Admin::class, 'admin_id');
-    }
     public function Client()
     {
         return $this->hasMany(Client::class, 'technical_expert_id');
+    }
+    public function Admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
     public function RequestEquipment()
     {

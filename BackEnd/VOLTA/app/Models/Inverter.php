@@ -18,18 +18,19 @@ class Inverter extends Authenticatable
         'inverters_id',
         'model_name',
         'operating_temperature',
-        'inver_mode_rated_power',
-        'inver_mode_dc_input',
-        'inver_mode_ac_output',
+        'invert_mode_rated_power',
+        'invert_mode_dc_input',
+        'invert_mode_ac_output',
         'ac_charger_mode_ac_input',
         'ac_charger_mode_ac_output',
         'ac_charger_mode_dc_output',
-        'ac_charger_mode_max_amber_charger',
+        'ac_charger_mode_max_charger',
         'solar_charger_mode_rated_power',
         'solar_charger_mode_system_voltage',
         'solar_charger_mode_mppt_voltage_range',
         'solar_charger_mode_max_solar_voltage'
     ];
+
 
     public function RequestEquipment()
     {

@@ -14,7 +14,7 @@ class Battery extends Authenticatable
     use HasFactory, HasApiTokens;
 
     protected $primaryKey = 'battery_id';
-    protected $filabel = [
+    protected $fillable = [
         'battery_id',
         'battery_type',
         'absorb_stage_volts',

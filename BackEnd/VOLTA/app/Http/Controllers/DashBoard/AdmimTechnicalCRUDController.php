@@ -48,7 +48,7 @@ class AdmimTechnicalCRUDController extends Controller
     public function ShowAllTechnicalExpert()
     {
         try {
-            $AllTechnicalExpert = TechnicalExpert::get();
+            $AllTechnicalExpert = TechnicalExpert::with('Admin')->get();
             if ($AllTechnicalExpert->isNotEmpty()) {
                 return response()->json([
                     'msg' => 'Successfully ',
@@ -77,7 +77,7 @@ class AdmimTechnicalCRUDController extends Controller
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
         }
         try {
-            $TechnicalExpert = TechnicalExpert::findOrFail($request->input('technical_expert_id'));
+            $TechnicalExpert = TechnicalExpert::with('Admin')->findOrFail($request->input('technical_expert_id'));
             return response()->json([
                 'msg' => 'Successfully find',
                 'Technical Expert data' => $TechnicalExpert

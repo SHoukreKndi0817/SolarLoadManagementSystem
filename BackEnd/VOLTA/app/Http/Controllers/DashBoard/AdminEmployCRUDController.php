@@ -23,6 +23,7 @@ class AdminEmployCRUDController extends Controller
                 'user_name' => 'required|string|max:255|unique:admins',
                 'password' => 'required|string|min:6',
                 'role' => 'required|in:super_admin,employe',
+
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -30,6 +31,7 @@ class AdminEmployCRUDController extends Controller
         try {
             $AdminData = $request->all();
             $AdminData['password'] = Hash::make($AdminData['password']);
+            $AdminData['is_active'] = true;
             $Admin = Admin::create($AdminData);
             return response()->json([
                 "msg" => "Admin created successfully",
