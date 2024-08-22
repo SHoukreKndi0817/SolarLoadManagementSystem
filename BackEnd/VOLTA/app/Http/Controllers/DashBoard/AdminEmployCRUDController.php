@@ -12,6 +12,7 @@ class AdminEmployCRUDController extends Controller
 {
 
     //-----------------------------------------------------------
+    //Admin Add new account for Dashboard-------------------
     public function AddAdminAccount(Request $request)
     {
 
@@ -43,6 +44,7 @@ class AdminEmployCRUDController extends Controller
     }
 
     //---------------------------------------------------
+    //Show all admin account-----------------------------
     public function ShowAllAdmin()
     {
         try {
@@ -63,6 +65,7 @@ class AdminEmployCRUDController extends Controller
 
 
     //-----------------------------------------------------------
+    //Show admin data------------------------------
     public function ShowAdmin(Request $request)
     {
         try {
@@ -88,6 +91,7 @@ class AdminEmployCRUDController extends Controller
 
 
     //--------------------------------------------------------
+    //Edit Admin data ---------------------------------------
     public function EditAdminData(Request $request)
     {
 
@@ -122,6 +126,7 @@ class AdminEmployCRUDController extends Controller
 
 
     //-----------------------------------------------------
+    //DeactiveAdmin account--------------------------------
     public function DeactivateAdmin(Request $request)
     {
         try {

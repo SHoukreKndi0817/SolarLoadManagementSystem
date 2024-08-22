@@ -18,11 +18,17 @@ use App\Http\Controllers\Application\TechnicalExpert\EquipmentRequest;
 
 
 //-------------------------------Client maneger in Technical Expert phone-------------------------------
+
 Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
       ->controller(CreateClient::class)->group(function () {
             Route::post('Phone/AddClientAccount', 'AddClientAccount');
-            // Route::post('Phone/ShowClientYouAdd', 'ShowClientYouAdd');
+            Route::post('Phone/ShowAllClientYouAdd', 'ShowAllClientYouAdd');
+            Route::post('Phone/ShowClientData', 'ShowClientData');
+            Route::post('Phone/SolarSystemAssociatedWithClient', 'SolarSystemAssociatedWithClient');
+            Route::post('Phone/AddSolarSystemInfo', 'AddSolarSystemInfo');
       });
+
+//--------------------------------------------------------
 //------------------------------------Equipment CRUD -----------------------------------------------------------
 
 Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')

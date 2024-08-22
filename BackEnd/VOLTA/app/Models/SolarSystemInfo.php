@@ -20,6 +20,7 @@ class SolarSystemInfo extends Authenticatable
     protected $primaryKey = 'solar_sys_info_id';
     protected $fillable = [
         'solar_sys_info_id',
+        'name',
         'client_id',
         'technical_expert_id',
         'inverters_id',
@@ -32,7 +33,8 @@ class SolarSystemInfo extends Authenticatable
         'number_of_panel_group',
         'panel_conection_typeone',
         'panel_conection_typetwo',
-        'phase_type'
+        'phase_type',
+        'broadcast_device_id'
     ];
 
 
