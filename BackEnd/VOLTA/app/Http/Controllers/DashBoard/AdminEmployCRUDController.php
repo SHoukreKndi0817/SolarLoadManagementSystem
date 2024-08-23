@@ -97,9 +97,9 @@ class AdminEmployCRUDController extends Controller
 
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'phone_number' => ['required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
-                'role' => 'required|in:super_admin,employe',
+                'name' => 'sometimes|required|string|max:255',
+                'phone_number' => ['sometimes', 'required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
+                'role' => 'sometimes|required|in:super_admin,employe',
                 'admin_id' => 'required|exists:admins,admin_id'
             ]);
         } catch (ValidationException $e) {

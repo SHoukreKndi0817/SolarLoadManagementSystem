@@ -61,10 +61,10 @@ class AdminClientCRUD extends Controller
         try {
             $validatedData = $request->validate([
                 'client_id' => ['required', 'exists:clients,client_id'],
-                'name' => 'required|string|max:255',
-                'phone_number' => ['required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
-                'home_address' => 'required|string|max:255',
-                'user_name' => 'required|string|max:255',
+                'name' => 'sometimes|required|string|max:255',
+                'phone_number' => ['sometimes', 'required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
+                'home_address' => 'sometimes|required|string|max:255',
+                'user_name' => 'sometimes|required|string|max:255',
                 'technical_user_name' => 'required|exists:technical_experts,user_name',
             ]);
         } catch (ValidationException $e) {

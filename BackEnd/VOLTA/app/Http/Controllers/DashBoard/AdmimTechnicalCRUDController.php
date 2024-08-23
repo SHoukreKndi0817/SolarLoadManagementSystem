@@ -94,10 +94,10 @@ class AdmimTechnicalCRUDController extends Controller
 
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'phone_number' => ['required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
-                'home_address' => 'required|string|max:255',
-                'admin_id' => 'required|exists:admins,admin_id',
+                'name' => 'sometimes|required|string|max:255',
+                'phone_number' => ['sometimes', 'required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
+                'home_address' => 'sometimes|required|string|max:255',
+                'admin_id' => 'sometimes|required|exists:admins,admin_id',
                 'technical_expert_id' => 'required|exists:technical_experts,technical_expert_id',
             ]);
         } catch (ValidationException $e) {

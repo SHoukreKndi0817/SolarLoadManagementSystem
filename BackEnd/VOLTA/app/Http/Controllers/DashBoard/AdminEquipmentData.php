@@ -112,12 +112,12 @@ class AdminEquipmentData extends Controller
         try {
             $validatedData = $request->validate([
                 'panel_id' => 'required|exists:panels,panel_id',
-                'manufacturer' => 'required|string|max:255',
-                'model' => 'required|string|max:255',
-                'max_power_output_watt' => 'required|string|max:255',
-                'cell_type' => 'required|string|max:255',
-                'efficiency' => 'required|string|max:255',
-                'panel_type' => 'required|string|max:255',
+                'manufacturer' => 'sometimes|required|string|max:255',
+                'model' => 'sometimes|required|string|max:255',
+                'max_power_output_watt' => 'sometimes|required|string|max:255',
+                'cell_type' => 'sometimes|required|string|max:255',
+                'efficiency' => 'sometimes|required|string|max:255',
+                'panel_type' => 'sometimes|required|string|max:255',
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -244,12 +244,12 @@ class AdminEquipmentData extends Controller
         try {
             $validatedData = $request->validate([
                 'battery_id' => 'required|exists:batteries,battery_id',
-                'battery_type' => 'required|string|max:255',
-                'absorb_stage_volts' => 'required|string|max:255',
-                'float_stage_volts' => 'required|string|max:255',
-                'equalize_stage_volts' => 'required|string|max:255',
-                'equalize_interval_days' => 'required|string|max:255',
-                'seting_switches' => 'required|string|max:255',
+                'battery_type' => 'sometimes|required|string|max:255',
+                'absorb_stage_volts' => 'sometimes|required|string|max:255',
+                'float_stage_volts' => 'sometimes|required|string|max:255',
+                'equalize_stage_volts' => 'sometimes|required|string|max:255',
+                'equalize_interval_days' => 'sometimes|required|string|max:255',
+                'seting_switches' => 'sometimes|required|string|max:255',
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -386,19 +386,19 @@ class AdminEquipmentData extends Controller
         try {
             $validatedData = $request->validate([
                 'inverters_id' => 'required|exists:inverters,inverters_id',
-                'model_name' => 'required|string|max:255',
-                'operating_temperature' => 'required|string|max:255',
-                'invert_mode_rated_power' => 'required|string|max:255',
-                'invert_mode_dc_input' => 'required|string|max:255',
-                'invert_mode_ac_output' => 'required|string|max:255',
-                'ac_charger_mode_ac_input' => 'required|string|max:255',
-                'ac_charger_mode_ac_output' => 'required|string|max:255',
-                'ac_charger_mode_dc_output' => 'required|string|max:255',
-                'ac_charger_mode_max_charger' => 'required|string|max:255',
-                'solar_charger_mode_rated_power' => 'required|string|max:255',
-                'solar_charger_mode_system_voltage' => 'required|string|max:255',
-                'solar_charger_mode_mppt_voltage_range' => 'required|string|max:255',
-                'solar_charger_mode_max_solar_voltage' => 'required|string|max:255',
+                'model_name' => 'sometimes|required|string|max:255',
+                'operating_temperature' => 'sometimes|required|string|max:255',
+                'invert_mode_rated_power' => 'sometimes|required|string|max:255',
+                'invert_mode_dc_input' => 'sometimes|required|string|max:255',
+                'invert_mode_ac_output' => 'sometimes|required|string|max:255',
+                'ac_charger_mode_ac_input' => 'sometimes|required|string|max:255',
+                'ac_charger_mode_ac_output' => 'sometimes|required|string|max:255',
+                'ac_charger_mode_dc_output' => 'sometimes|required|string|max:255',
+                'ac_charger_mode_max_charger' => 'sometimes|required|string|max:255',
+                'solar_charger_mode_rated_power' => 'sometimes|required|string|max:255',
+                'solar_charger_mode_system_voltage' => 'sometimes|required|string|max:255',
+                'solar_charger_mode_mppt_voltage_range' => 'sometimes|required|string|max:255',
+                'solar_charger_mode_max_solar_voltage' => 'sometimes|required|string|max:255',
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
