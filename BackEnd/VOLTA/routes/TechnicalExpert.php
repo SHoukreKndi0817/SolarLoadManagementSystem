@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Application\TechnicalExpert\CreateClient;
 use App\Http\Controllers\Application\TechnicalExpert\EquipmentRequest;
-
+use App\Http\Controllers\Application\TechnicalExpert\ProfileController;
+use App\Http\Controllers\Application\TechnicalExpert\SolarSysytemInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,25 @@ Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
             Route::post('Phone/AddClientAccount', 'AddClientAccount');
             Route::post('Phone/ShowAllClientYouAdd', 'ShowAllClientYouAdd');
             Route::post('Phone/ShowClientData', 'ShowClientData');
-            Route::post('Phone/SolarSystemAssociatedWithClient', 'SolarSystemAssociatedWithClient');
+            Route::post('Phone/EditClient', 'EditClient');
+            Route::post('Phone/changeClientExpert', 'changeClientExpert');
+      });
+
+//--------------------------------------------------
+//--------------------Solar System Maneger For Client use technical --------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
+      ->controller(SolarSysytemInfoController::class)->group(function () {
             Route::post('Phone/AddSolarSystemInfo', 'AddSolarSystemInfo');
+            Route::post('Phone/UpdateSolarSystemInfo', 'UpdateSolarSystemInfo');
+            Route::post('Phone/SolarSystemAssociatedWithClient', 'SolarSystemAssociatedWithClient');
+      });
+
+//--------------------------------------------------
+//-------------------- Technical Expert Profile --------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
+      ->controller(ProfileController::class)->group(function () {
+            Route::post('Phone/ShowTechnicalExpertData', 'ShowTechnicalExpertData');
+            Route::post('Phone/EditTechnicalExpertData', 'EditTechnicalExpertData');
       });
 
 //--------------------------------------------------------

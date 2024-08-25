@@ -86,9 +86,8 @@ class AdmimTechnicalCRUDController extends Controller
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
-    //------------------------------------------------------------
+    //-----------------------------------------------------------------------
     //update Technical Expert data
-    //with password and username or not 
     public function EditTechnicalExpertData(Request $request)
     {
 
