@@ -19,6 +19,7 @@ class RequestEquipment extends Authenticatable
 
     protected $fillable = [
         'request_equipment_id',
+        'name',
         'technical_expert_id',
         'number_of_broadcast_device',
         'number_of_port',
@@ -28,8 +29,10 @@ class RequestEquipment extends Authenticatable
         'battery_id',
         'number_of_battery',
         'inverters_id',
+        'number_of_inverter',
         'additional_equipment',
         'status',
+        'commet',
     ];
 
     public function TechnicalExpert()

@@ -475,6 +475,7 @@ class AdminEquipmentData extends Controller
             $validatedData = $request->validate([
 
                 'request_equipment_id' => 'required|exists:request_equipment,request_equipment_id',
+                'commet' => 'required|string|max:255'
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -488,6 +489,8 @@ class AdminEquipmentData extends Controller
                 ], 200, [], JSON_PRETTY_PRINT);
             }
             //---------------
+
+            $RequestEquipment['commet'] = $validatedData['commet'];
             $RequestEquipment['status'] = 'approved';
             $RequestEquipment->save();
             return response()->json([
@@ -509,6 +512,7 @@ class AdminEquipmentData extends Controller
             $validatedData = $request->validate([
 
                 'request_equipment_id' => 'required|exists:request_equipment,request_equipment_id',
+                'commet' => 'required|string|max:255'
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -522,6 +526,7 @@ class AdminEquipmentData extends Controller
                 ], 200, [], JSON_PRETTY_PRINT);
             }
             //---------------
+            $RequestEquipment['commet'] = $validatedData['commet'];
             $RequestEquipment['status'] = 'rejected';
             $RequestEquipment->save();
             return response()->json([

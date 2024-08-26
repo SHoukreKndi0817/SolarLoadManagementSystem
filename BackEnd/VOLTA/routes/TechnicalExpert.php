@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashBoard\AdminEquipmentData;
 use App\Http\Controllers\Application\TechnicalExpert\CreateClient;
 use App\Http\Controllers\Application\TechnicalExpert\EquipmentRequest;
 use App\Http\Controllers\Application\TechnicalExpert\ProfileController;
@@ -52,4 +53,16 @@ Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
 Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
       ->controller(EquipmentRequest::class)->group(function () {
             Route::post('Phone/SendEquipmentRequest', 'SendEquipmentRequest');
+            Route::post('Phone/ShowAllEquipmentRequest', 'ShowAllEquipmentRequest');
+            Route::post('Phone/ShowEquipmentRequestData', 'ShowEquipmentRequestData');
+            Route::post('Phone/EditRequestEquipmentData', 'EditRequestEquipmentData');
+      });
+
+//-----------------------------------------------------------------------------------------------
+//------------------Api get data for Equipment Form-------------------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
+      ->controller(AdminEquipmentData::class)->group(function () {
+            Route::post('Phone/ShowAllInverter', 'ShowAllInverter');
+            Route::post('Phone/ShowAllBattery', 'ShowAllBattery');
+            Route::post('Phone/ShowAllPanel', 'ShowAllPanel');
       });
