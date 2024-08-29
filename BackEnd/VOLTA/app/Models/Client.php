@@ -53,4 +53,9 @@ class Client extends Authenticatable
     {
         return $this->hasMany(Rating::class, 'client_id');
     }
+    // Accessor لحساب عدد المنظومات الشمسية
+    public function getTotalSolarSystemsAttribute()
+    {
+        return $this->SolarSystemInfo()->count();
+    }
 }

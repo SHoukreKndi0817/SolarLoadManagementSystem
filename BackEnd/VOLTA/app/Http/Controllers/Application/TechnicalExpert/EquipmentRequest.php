@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Application\TechnicalExpert;
 
+use App\Models\Panel;
+use App\Models\Battery;
+use App\Models\Inverter;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\RequestEquipment;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -142,6 +145,25 @@ class EquipmentRequest extends Controller
                 [],
                 JSON_PRETTY_PRINT
             );
+        } catch (\Exception $e) {
+            return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    //-----------------------------------------------------------------
+    //-----------------get data for Equipment Form-----------------
+    public function EquipmentFormDataToSend()
+    {
+        try {
+            $Panel = Panel::get();
+            $Battery = Battery::get();
+            $inverter = Inverter::get();
+            return response()->json([
+                'msg' => 'Successfully ',
+                'All Panel' => $Panel,
+                'All Battery' => $Battery,
+                'All inverter' => $inverter,
+            ], 200, [], JSON_PRETTY_PRINT);
         } catch (\Exception $e) {
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }

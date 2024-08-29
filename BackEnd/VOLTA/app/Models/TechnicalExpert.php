@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Admin;
 use App\Models\Client;
+use Illuminate\Support\Carbon;
 use App\Models\SolarSystemInfo;
 use App\Models\RequestEquipment;
 use Laravel\Sanctum\HasApiTokens;
@@ -30,6 +31,11 @@ class TechnicalExpert extends Authenticatable
     protected $hidden = ['password'];
 
 
+    public function getDaysWorkedAttribute()
+    {
+        // حساب الفرق بين created_at والتاريخ الحالي
+        return Carbon::parse($this->created_at)->diffInDays(Carbon::now());
+    }
     public function Client()
     {
         return $this->hasMany(Client::class, 'technical_expert_id');

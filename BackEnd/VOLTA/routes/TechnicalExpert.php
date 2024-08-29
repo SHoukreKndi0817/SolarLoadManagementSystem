@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashBoard\AdminEquipmentData;
 use App\Http\Controllers\Application\TechnicalExpert\CreateClient;
 use App\Http\Controllers\Application\TechnicalExpert\EquipmentRequest;
+use App\Http\Controllers\Application\TechnicalExpert\HomePageController;
 use App\Http\Controllers\Application\TechnicalExpert\ProfileController;
 use App\Http\Controllers\Application\TechnicalExpert\SolarSysytemInfoController;
 
@@ -56,13 +57,13 @@ Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
             Route::post('Phone/ShowAllEquipmentRequest', 'ShowAllEquipmentRequest');
             Route::post('Phone/ShowEquipmentRequestData', 'ShowEquipmentRequestData');
             Route::post('Phone/EditRequestEquipmentData', 'EditRequestEquipmentData');
+            Route::post('Phone/EquipmentFormDataToSend', 'EquipmentFormDataToSend'); //Api get data for Equipment Form
       });
 
+
 //-----------------------------------------------------------------------------------------------
-//------------------Api get data for Equipment Form-------------------------------------
+//------------------Api To Get A Home Page Data-------------------------------------
 Route::middleware('auth:sanctum', 'CheckUserRole:technical_expert')
-      ->controller(AdminEquipmentData::class)->group(function () {
-            Route::post('Phone/ShowAllInverter', 'ShowAllInverter');
-            Route::post('Phone/ShowAllBattery', 'ShowAllBattery');
-            Route::post('Phone/ShowAllPanel', 'ShowAllPanel');
+      ->controller(HomePageController::class)->group(function () {
+            Route::post('Phone/TechnicalExpertHomePage', 'TechnicalExpertHomePage');
       });

@@ -97,10 +97,25 @@ class AdminEmployCRUDController extends Controller
 
         try {
             $validatedData = $request->validate([
+                'admin_id' => 'required|exists:admins,admin_id',
                 'name' => 'sometimes|required|string|max:255',
-                'phone_number' => ['sometimes', 'required', 'string', 'min:10', 'max:16', 'regex:/^0\d{8,14}$/'],
+                'phone_number' => [
+                    'sometimes',
+                    'required',
+                    'string',
+                    'min:10',
+                    'max:16',
+                    'regex:/^0\d{8,14}$/',
+                    'unique:admins,phone_number,' . $request->admin_id . ',admin_id'
+                ],
+                'user_name' => [
+                    'sometimes',
+                    'required',
+                    'string',
+                    'max:255',
+                    'unique:admins,user_name,' . $request->admin_id . ',admin_id'
+                ],
                 'role' => 'sometimes|required|in:super_admin,employe',
-                'admin_id' => 'required|exists:admins,admin_id'
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);

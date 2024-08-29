@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DashBoard\AdminClientCRUD;
+use App\Http\Controllers\DashBoard\ProfileController;
 use App\Http\Controllers\DashBoard\AdminEquipmentData;
 use App\Http\Controllers\DashBoard\AdminEmployCRUDController;
 use App\Http\Controllers\DashBoard\BroadcastDeviceController;
@@ -102,3 +103,5 @@ Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')->controll
     Route::post('Dash/DeleteBroadcastDevice', 'DeleteBroadcastDevice');
     Route::post('Dash/GenerateQRCodeData', 'GenerateQRCodeData');
 });
+
+
