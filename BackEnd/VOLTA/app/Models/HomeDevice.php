@@ -14,7 +14,7 @@ class HomeDevice extends Authenticatable
     use HasFactory, HasApiTokens;
 
     protected $primaryKey = 'home_device_id';
-    protected $filabel = [
+    protected $fillable = [
         'home_device_id',
         'socket_id',
         'device_name',
