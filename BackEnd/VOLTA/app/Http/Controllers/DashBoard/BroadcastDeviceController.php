@@ -64,11 +64,12 @@ class BroadcastDeviceController extends Controller
         }
     }
 
-
+    //---------------------------------------------------------
+    //----------------------------------------------------
     public function ShowAllDeviceBroadcast()
     {
         try {
-            $BroadcastDevice = BroadcastDevice::with('Socket')->get();
+            $BroadcastDevice = BroadcastDevice::get();
             if ($BroadcastDevice->isNotEmpty()) {
                 return response()->json([
                     'msg' => 'Successfully ',
@@ -83,28 +84,56 @@ class BroadcastDeviceController extends Controller
     }
 
 
-    //-----------------------------------------------------------
+    //-------------------------------------------------------------------------------------
+    //Show device data---------------------
     public function ShowDeviceBroadcast(Request $request)
     {
         try {
             // قواعد التحقق من البيانات
             $validatedData = $request->validate([
-
                 'broadcast_device_id' => 'required|exists:broadcast_devices,broadcast_device_id',
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
         }
+
         try {
-            $BroadcastDeviceData = BroadcastDevice::with('Socket')->findOrFail($request->input('broadcast_device_id'));
+
+            $BroadcastDeviceData = BroadcastDevice::with('Socket', 'SolarSystemInfo.Client')
+                ->findOrFail($request->input('broadcast_device_id'));
+
+            // التحقق مما إذا كان النظام الشمسي مرتبطاً
+            if ($BroadcastDeviceData->SolarSystemInfo) {
+                // استخراج بيانات العميل إذا كان النظام الشمسي موجودًا
+                $clientData = $BroadcastDeviceData->SolarSystemInfo->Client;
+                $clientData['Solar System Name'] = $BroadcastDeviceData->SolarSystemInfo->name;
+            } else {
+                // إذا لم يكن النظام الشمسي مرتبطًا، إرجاع رسالة
+                $clientData = "غير مستخدم حالياً";
+            }
+
+            // إرجاع جهاز البث مع معلومات المقابس والعميل (أو رسالة غير مستخدم حالياً)
             return response()->json([
-                'msg' => 'Successfully find',
-                'BroadcastDevice Data' => $BroadcastDeviceData
+                'msg' => 'Successfully retrieved data',
+                'BroadcastDevice Data' => [
+                    'broadcast_device_id' => $BroadcastDeviceData->broadcast_device_id,
+                    'model' => $BroadcastDeviceData->model,
+                    'version' => $BroadcastDeviceData->version,
+                    'number_of_wired_port' => $BroadcastDeviceData->number_of_wired_port,
+                    'number_of_wireless_port' => $BroadcastDeviceData->number_of_wireless_port,
+                    'mac_address' => $BroadcastDeviceData->mac_address,
+                    'status' => $BroadcastDeviceData->status,
+                    'created_at' => $BroadcastDeviceData->created_at,
+                    'updated_at' => $BroadcastDeviceData->updated_at,
+                    'socket' => $BroadcastDeviceData->Socket
+                ],
+                'Client Data' => $clientData
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (\Exception $e) {
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
+
 
 
     // Edit Broadcast Device Data with Sockets------------------------------

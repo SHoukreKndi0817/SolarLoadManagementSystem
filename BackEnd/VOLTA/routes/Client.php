@@ -36,7 +36,9 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
 //----------------Rate The Technical Expert ----------------------------------------
 Route::middleware('auth:sanctum', 'CheckUserRole:client')
       ->controller(RateTechnicalExpert::class)->group(function () {
+            Route::post('Phone/ShowTechnicalExpertRating', 'ShowTechnicalExpertRating');
             Route::post('Phone/RateTechnicalExpert', 'RateTechnicalExpert');
+            Route::post('Phone/UpdateTechnicalExpertRating', 'UpdateTechnicalExpertRating');
       });
 
 //-------------------------------------------------------------------------------------
@@ -45,4 +47,6 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
       ->controller(AddHomeDeviceController::class)->group(function () {
             Route::post('Phone/AllSocket', 'AllSocket');
             Route::post('Phone/AddHomeDeviceData', 'AddHomeDeviceData');
+            Route::post('Phone/GetHomeDevicesAddedByClient', 'GetHomeDevicesAddedByClient');
+            Route::post('Phone/ShowHomeDeviceInfo', 'ShowHomeDeviceInfo');
       });

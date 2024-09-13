@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class AdminEquipmentData extends Controller
 {
-   
+
     //------------------------------------------------------------
     //---------------------------------------------Panel Function Section----------------------------------------------------------------------------------------------------------------------
 
@@ -430,7 +430,7 @@ class AdminEquipmentData extends Controller
     public function ShowAllRequestEquipment()
     {
         try {
-            $AllRequest = RequestEquipment::with('TechnicalExpert')->get();
+            $AllRequest = RequestEquipment::with('TechnicalExpert', 'Panel', 'Battery', 'Inverter')->get();
             if ($AllRequest->isNotEmpty()) {
                 return response()->json([
                     'msg' => 'Successfully ',

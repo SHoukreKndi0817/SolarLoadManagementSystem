@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
+    //show profile data -------------------------------------------
     public function ShowClientData(Request $request)
     {
         try {
@@ -30,9 +31,9 @@ class ProfileController extends Controller
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
-   
+
     //-----------------------------------------------------------------------
-    //update Client data
+    //update Client data -----------------------------------------------------
     public function ClientDataUpdate(Request $request)
     {
 
