@@ -55,7 +55,7 @@ class YouSolarSystemInfoController extends Controller
         }
 
         try {
-            $SolarSystemInfo = SolarSystemInfo::with('TechnicalExpert', 'Inverter', 'Battery', 'Panel', 'BroadcastDevice', 'SystemEfficiency')->where('solar_sys_info_id', $validatedData['solar_sys_info_id'])->first();
+            $SolarSystemInfo = SolarSystemInfo::with('TechnicalExpert', 'Inverter', 'Battery', 'Panel')->where('solar_sys_info_id', $validatedData['solar_sys_info_id'])->first();
             return response()->json(
                 [
                     'msg' => 'Succesfly',

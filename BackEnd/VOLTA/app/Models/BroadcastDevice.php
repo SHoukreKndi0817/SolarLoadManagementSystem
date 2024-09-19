@@ -20,7 +20,7 @@ class BroadcastDevice extends Authenticatable
         'version',
         'number_of_wired_port',
         'number_of_wireless_port',
-        'mac_address',
+        'ip_addrees',
         'status',
     ];
     public function SolarSystemInfo()

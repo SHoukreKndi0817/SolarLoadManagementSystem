@@ -63,7 +63,8 @@ class AddHomeDeviceController extends Controller
                 'device_name' => 'required|string|max:255',
                 'device_type' => 'required|string|max:255',
                 'device_operation_type' => 'required|string|max:255',
-                'operation_max_voltage' => 'required|numeric',
+                'operation_max_watt' => 'required|numeric',
+                'priority' => 'required|string|in:high,medium,low',
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -130,7 +131,7 @@ class AddHomeDeviceController extends Controller
             }
 
             // الحصول على الأجهزة المنزلية المرتبطة بالمقابس
-            $homeDevices = HomeDevice::with('Socket')->whereIn('socket_id', $socketIds)->select('home_device_id', 'device_name', 'socket_id')->get();
+            $homeDevices = HomeDevice::with('Socket')->whereIn('socket_id', $socketIds)->select('home_device_id', 'device_name', 'device_type', 'socket_id')->get();
 
             if ($homeDevices->isEmpty()) {
                 return response()->json(["msg" => "No home devices found for the specified sockets."], 404, [], JSON_PRETTY_PRINT);
@@ -140,6 +141,7 @@ class AddHomeDeviceController extends Controller
                 return [
                     'home_device_id' => $homeDevice->home_device_id,
                     'device_name' => $homeDevice->device_name,
+                    'device_type' => $homeDevice->device_type,
                     'socket_id' => $homeDevice->socket_id,
                     'socket_name' => $homeDevice->Socket ? $homeDevice->Socket->socket_name : 'Unknown', // اسم المقبس
                     'socket_status' => $homeDevice->Socket ? $homeDevice->Socket->status : 'Unknown', // حالة المقبس
@@ -171,12 +173,46 @@ class AddHomeDeviceController extends Controller
         }
 
         try {
-            $HomeDevice = HomeDevice::with('Socket')->where('home_device_id', $validatedData['home_device_id'])->first();
+            $HomeDevice = HomeDevice::where('home_device_id', $validatedData['home_device_id'])->first();
             return response()->json(
                 [
                     'msg' => 'Succesfly',
                     'Home Device Information' => $HomeDevice,
 
+                ],
+                200,
+                [],
+                JSON_PRETTY_PRINT
+            );
+        } catch (\Exception $e) {
+            return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+    //----Change Socket Name from client -----------------------------------------------------------
+
+    public function ChangeSocketName(Request $request)
+    {
+        try {
+            // التحقق من صحة البيانات المرسلة
+            $validatedData = $request->validate([
+                'socket_id' => 'required|exists:sockets,socket_id',
+                'socket_name' => 'required|string|max:255',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json(["msg" => $e->validator->errors()->first()], 422, [], JSON_PRETTY_PRINT);
+        }
+
+        try {
+
+            $socket = Socket::where('socket_id', $validatedData['socket_id'])->first();
+
+            $socket->socket_name = $validatedData['socket_name'];
+            $socket->save();
+            return response()->json(
+                [
+                    'msg' => 'Socket name updated successfully',
                 ],
                 200,
                 [],

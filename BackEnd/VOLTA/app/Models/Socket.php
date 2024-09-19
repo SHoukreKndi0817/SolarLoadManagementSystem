@@ -18,6 +18,7 @@ class Socket extends Authenticatable
         'broadcast_device_id',
         'socket_model',
         'socket_version',
+        'serial_number',
         'socket_name',
         'socket_connection_type',
         'status',

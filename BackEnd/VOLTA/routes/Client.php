@@ -3,6 +3,7 @@
 use App\Http\Controllers\Application\Client\AddHomeDeviceController;
 use App\Http\Controllers\Application\Client\ProfileController;
 use App\Http\Controllers\Application\Client\RateTechnicalExpert;
+use App\Http\Controllers\Application\Client\TaskSchedulerController;
 use App\Http\Controllers\Application\Client\YouSolarSystemInfoController;
 use Illuminate\Support\Facades\Route;
 /*
@@ -49,4 +50,15 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
             Route::post('Phone/AddHomeDeviceData', 'AddHomeDeviceData');
             Route::post('Phone/GetHomeDevicesAddedByClient', 'GetHomeDevicesAddedByClient');
             Route::post('Phone/ShowHomeDeviceInfo', 'ShowHomeDeviceInfo');
+            Route::post('Phone/ChangeSocketName', 'ChangeSocketName');
+      });
+
+//-----------------------------------------------------------------------------------------
+//-----------------------CreateTask------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:client')
+      ->controller(TaskSchedulerController::class)->group(function () {
+            Route::post('Phone/CreateTask', 'CreateTask');
+            Route::post('Phone/ShowAllTasks', 'ShowAllTasks');
+            Route::post('Phone/EditTasks', 'EditTasks');
+            Route::post('Phone/DeletTask', 'DeletTask');
       });

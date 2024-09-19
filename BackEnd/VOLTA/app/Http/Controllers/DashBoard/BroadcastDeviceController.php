@@ -23,20 +23,26 @@ class BroadcastDeviceController extends Controller
                 'version' => 'required|string|max:255',
                 'number_of_wired_port' => 'required|integer|min:0',
                 'number_of_wireless_port' => 'required|integer|min:0',
-                'mac_address' => ['required', 'string', 'unique:broadcast_devices', 'regex:/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/'],
+                'ip_addrees' => ['required', 'string', 'unique:broadcast_devices,ip_addrees', 'ip'],
                 'sockets' => 'required|array',
                 'sockets.*.socket_model' => 'required|string|max:255',
                 'sockets.*.socket_version' => 'required|string|max:255',
+                'sockets.*.serial_number' => 'required|string|max:255|unique:sockets,serial_number',
                 'sockets.*.socket_name' => 'required|string|max:255',
                 'sockets.*.socket_connection_type' => 'required|string|max:255',
             ]);
+            // تحقق من عدم وجود serial_number مكرر في الطلب نفسه
+            $serialNumbers = array_column($request->input('sockets'), 'serial_number');
+            if (count($serialNumbers) !== count(array_unique($serialNumbers))) {
+                return response()->json(["msg" => "Each socket must have a unique serial_number"], 400, [], JSON_PRETTY_PRINT);
+            }
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
         }
 
         try {
             // إنشاء جهاز البث
-            $broadcastDeviceData = $request->only(['model', 'version', 'number_of_wired_port', 'number_of_wireless_port', 'mac_address']);
+            $broadcastDeviceData = $request->only(['model', 'version', 'number_of_wired_port', 'number_of_wireless_port', 'ip_addrees']);
             $broadcastDeviceData['status'] = 'inactive';
             $broadcastDevice = BroadcastDevice::create($broadcastDeviceData);
 
@@ -47,6 +53,7 @@ class BroadcastDeviceController extends Controller
                     'broadcast_device_id' => $broadcastDevice->broadcast_device_id,
                     'socket_model' => $socket['socket_model'],
                     'socket_version' => $socket['socket_version'],
+                    'serial_number' => $socket['serial_number'],
                     'socket_name' => $socket['socket_name'],
                     'socket_connection_type' => $socket['socket_connection_type'],
                     'status' =>  true,
@@ -121,7 +128,7 @@ class BroadcastDeviceController extends Controller
                     'version' => $BroadcastDeviceData->version,
                     'number_of_wired_port' => $BroadcastDeviceData->number_of_wired_port,
                     'number_of_wireless_port' => $BroadcastDeviceData->number_of_wireless_port,
-                    'mac_address' => $BroadcastDeviceData->mac_address,
+                    'ip_addrees' => $BroadcastDeviceData->ip_addrees,
                     'status' => $BroadcastDeviceData->status,
                     'created_at' => $BroadcastDeviceData->created_at,
                     'updated_at' => $BroadcastDeviceData->updated_at,
@@ -147,14 +154,16 @@ class BroadcastDeviceController extends Controller
                 'version' => 'sometimes|required|string|max:255',
                 'number_of_wired_port' => 'sometimes|required|integer|min:0',
                 'number_of_wireless_port' => 'sometimes|required|integer|min:0',
-                'mac_address' => ['sometimes', 'required', 'string', 'unique:broadcast_devices,mac_address,'
-                    . $request->broadcast_device_id . ',broadcast_device_id', 'regex:/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/'],
+                'ip_addrees' => ['sometimes', 'required', 'string', 'unique:broadcast_devices,ip_addrees,'
+                    . $request->broadcast_device_id . ',broadcast_device_id', 'ip'], // تغيير mac_address إلى ip_addrees
                 'sockets' => 'sometimes|required|array',
                 'sockets.*.socket_id' => 'required|exists:sockets,socket_id',
                 'sockets.*.socket_model' => 'sometimes|required|string|max:255',
                 'sockets.*.socket_version' => 'sometimes|required|string|max:255',
+                'sockets.*.serial_number' => 'sometimes|required|string|max:255|unique:sockets,serial_number',
                 'sockets.*.socket_name' => 'sometimes|required|string|max:255',
                 'sockets.*.socket_connection_type' => 'sometimes|required|string|max:255',
+
             ]);
         } catch (ValidationException $e) {
             return response()->json(["msg" => $e->validator->errors()->first()], $e->status, [], JSON_PRETTY_PRINT);
@@ -165,7 +174,7 @@ class BroadcastDeviceController extends Controller
             $broadcastDevice = BroadcastDevice::findOrFail($request->input('broadcast_device_id'));
 
             // تحديث بيانات جهاز البث
-            $broadcastDeviceData = $request->only(['model', 'version', 'number_of_wired_port', 'number_of_wireless_port', 'mac_address']);
+            $broadcastDeviceData = $request->only(['model', 'version', 'number_of_wired_port', 'number_of_wireless_port', 'ip_addrees']);
             $broadcastDevice->update($broadcastDeviceData);
 
             // تحديث بيانات المقابس المرتبطة
@@ -176,6 +185,7 @@ class BroadcastDeviceController extends Controller
                         'socket_model' => $socketData['socket_model'] ?? $socket->socket_model,
                         'socket_version' => $socketData['socket_version'] ?? $socket->socket_version,
                         'socket_name' => $socketData['socket_name'] ?? $socket->socket_name,
+                        'serial_number' => $socketData['serial_number'] ?? $socket->serial_number,
                         'socket_connection_type' => $socketData['socket_connection_type'] ?? $socket->socket_connection_type,
                     ];
                     $socket->update($socketUpdateData);

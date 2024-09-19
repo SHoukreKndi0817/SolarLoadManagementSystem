@@ -10,10 +10,11 @@ use App\Models\RequestEquipment;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class TechnicalExpert extends Authenticatable
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory, HasApiTokens , Notifiable;
 
     protected $primaryKey = 'technical_expert_id';
 

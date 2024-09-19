@@ -20,7 +20,8 @@ class HomeDevice extends Authenticatable
         'device_name',
         'device_type',
         'device_operation_type',
-        'operation_max_voltage',
+        'operation_max_watt',
+        'priority',
     ];
     public function Socket()
     {

@@ -16,19 +16,12 @@ class BroadcastData extends Authenticatable
     protected $primaryKey = 'broadcast_data_id';
     protected $filabel = [
         'broadcast_data_id',
-        'inverter_output_voltage',
-        'inverter_input_voltage',
         'battery_voltage',
         'solar_power_generation',
         'power_consumption',
-        'load_percentage',
-        'output_frequency(hz)',
-        'battery_charging_power(w)',
         'battery_percentage',
-        'battery_discharge_power',
         'electric',
         'status',
-        'error_code',
         'broadcast_device_id'
     ];
 

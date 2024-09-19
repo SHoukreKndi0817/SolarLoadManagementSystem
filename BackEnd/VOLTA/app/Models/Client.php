@@ -8,12 +8,13 @@ use App\Models\Rating;
 use App\Models\SolarSystemInfo;
 use App\Models\TechnicalExpert;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Client extends Authenticatable
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory, HasApiTokens,Notifiable;
 
     protected $primaryKey = 'client_id';
 
