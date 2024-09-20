@@ -156,6 +156,8 @@ class AdminEquipmentData extends Controller
             // قواعد التحقق من البيانات
             $validatedData = $request->validate([
                 'battery_type' => 'required|string|max:255',
+                'battery_capacity' => 'required|string|max:255',
+                'maximum_watt_battery' => 'required|string|max:255',
                 'absorb_stage_volts' => 'required|string|max:255',
                 'float_stage_volts' => 'required|string|max:255',
                 'equalize_stage_volts' => 'required|string|max:255',
@@ -168,6 +170,8 @@ class AdminEquipmentData extends Controller
         try {
             // التحقق من وجود سجل مماثل
             $duplicateBattery = Battery::where('battery_type', $request->battery_type)
+                ->where('battery_capacity', $request->battery_capacity)
+                ->where('maximum_watt_battery', $request->maximum_watt_battery)
                 ->where('absorb_stage_volts', $request->absorb_stage_volts)
                 ->where('float_stage_volts', $request->float_stage_volts)
                 ->where('equalize_stage_volts', $request->equalize_stage_volts)
@@ -247,6 +251,8 @@ class AdminEquipmentData extends Controller
             $validatedData = $request->validate([
                 'battery_id' => 'required|exists:batteries,battery_id',
                 'battery_type' => 'sometimes|required|string|max:255',
+                'battery_capacity' => 'required|string|max:255',
+                'maximum_watt_battery' => 'required|string|max:255',
                 'absorb_stage_volts' => 'sometimes|required|string|max:255',
                 'float_stage_volts' => 'sometimes|required|string|max:255',
                 'equalize_stage_volts' => 'sometimes|required|string|max:255',

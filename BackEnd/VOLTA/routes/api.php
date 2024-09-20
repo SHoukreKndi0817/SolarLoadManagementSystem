@@ -103,5 +103,3 @@ Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')->controll
     Route::post('Dash/DeleteBroadcastDevice', 'DeleteBroadcastDevice');
     Route::post('Dash/GenerateQRCodeData', 'GenerateQRCodeData');
 });
-
-

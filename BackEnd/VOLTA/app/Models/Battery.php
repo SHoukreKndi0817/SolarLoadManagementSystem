@@ -17,6 +17,8 @@ class Battery extends Authenticatable
     protected $fillable = [
         'battery_id',
         'battery_type',
+        'battery_capacity',
+        'maximum_watt_battery',
         'absorb_stage_volts',
         'float_stage_volts',
         'equalize_stage_volts',

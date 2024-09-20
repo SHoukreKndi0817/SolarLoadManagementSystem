@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Application\Client\AddHomeDeviceController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SLMT\SendActionToSocketController;
 use App\Http\Controllers\Application\Client\ProfileController;
 use App\Http\Controllers\Application\Client\RateTechnicalExpert;
+use App\Http\Controllers\Application\Client\AddHomeDeviceController;
 use App\Http\Controllers\Application\Client\TaskSchedulerController;
 use App\Http\Controllers\Application\Client\YouSolarSystemInfoController;
-use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Client Routes
@@ -61,4 +62,12 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
             Route::post('Phone/ShowAllTasks', 'ShowAllTasks');
             Route::post('Phone/EditTasks', 'EditTasks');
             Route::post('Phone/DeletTask', 'DeletTask');
+      });
+
+
+//--------------------------------------------------------------------------------
+//--------------------SLMT Data-----------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:client')
+      ->controller(SendActionToSocketController::class)->group(function () {
+            Route::post('Phone/CheckPowerToSendAction', 'CheckPowerToSendAction');
       });
