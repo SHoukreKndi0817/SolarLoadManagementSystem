@@ -43,8 +43,8 @@ class BroadcastSLMTController extends Controller
                 ['broadcast_device_id' => $broadcastDevice->broadcast_device_id], // الشرط
                 [
                     'battery_voltage' => $validatedData['battery_voltage'],
-                    'solar_power_generation' => $validatedData['solar_power_generation'],
-                    'power_consumption' => $validatedData['power_consumption'],
+                    'solar_power_generation(w)' => $validatedData['solar_power_generation'],
+                    'power_consumption(w)' => $validatedData['power_consumption'],
                     'battery_percentage' => $validatedData['battery_percentage'],
                     'electric' => $validatedData['electric'],
                     'status' => true

@@ -10,11 +10,11 @@ use Illuminate\Validation\ValidationException;
 
 class ShowBroadcastDataController extends Controller
 {
-    // تابع لعرض بيانات BroadcastData بناءً على solar_sys_info_id
+
     public function getBroadcastDataForClient(Request $request)
     {
         try {
-            // التحقق من صحة البيانات المستلمة
+
             $validatedData = $request->validate([
                 'solar_sys_info_id' => 'required|exists:solar_system_infos,solar_sys_info_id',
             ]);
@@ -23,7 +23,7 @@ class ShowBroadcastDataController extends Controller
         }
 
         try {
-            // جلب solar system بناءً على solar_sys_info_id
+
             $solarSystem = SolarSystemInfo::find($validatedData['solar_sys_info_id']);
 
             // التأكد من وجود broadcast_device_id في النظام الشمسي
@@ -38,18 +38,18 @@ class ShowBroadcastDataController extends Controller
                 ->select(
                     'broadcast_data_id',
                     'battery_voltage',
-                    'solar_power_generation',
-                    'power_consumption',
+                    'solar_power_generation(w)',
+                    'power_consumption(w)',
                     'battery_percentage',
                     'electric',
                     'status'
                 )
-                ->latest() // للحصول على أحدث البيانات فقط
+                ->latest()
                 ->first();
 
             if (!$broadcastData) {
                 return response()->json([
-                    "msg" => "No broadcast data found for this broadcast device."
+                    "msg" => "No broadcast data found for this Solar System."
                 ], 404, [], JSON_PRETTY_PRINT);
             }
 

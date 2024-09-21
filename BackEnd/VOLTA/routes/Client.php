@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SLMT\BroadcastSLMTController;
+use App\Http\Controllers\SLMT\ShowBroadcastDataController;
 use App\Http\Controllers\SLMT\SendActionToSocketController;
 use App\Http\Controllers\Application\Client\ProfileController;
 use App\Http\Controllers\Application\Client\RateTechnicalExpert;
@@ -67,14 +68,21 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
 
 
 //--------------------------------------------------------------------------------
-//--------------------SLMT Data-----------------------------
+//--------------------SLMT Data----------------------------------------------------------------------------------------
+//----Send Action to SLMT ------------------------------------
 Route::middleware('auth:sanctum', 'CheckUserRole:client')
       ->controller(SendActionToSocketController::class)->group(function () {
-            Route::post('Phone/CheckPowerToSendAction', 'CheckPowerToSendAction');
+            Route::post('SLMT/CheckPowerToSendAction', 'CheckPowerToSendAction');
       });
 
 //-----------------------------------------------------------------------
-//-----------SLMT Data reception-----------------------------------------
+//----Online Data From SLMT--------------------------------
 Route::controller(BroadcastSLMTController::class)->group(function () {
       Route::post('SLMT/addBroadcastData', 'addBroadcastData');
 });
+//------------------------------------------------------------------------
+//----Show SLMT Data Online ------------------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:client')
+      ->controller(ShowBroadcastDataController::class)->group(function () {
+            Route::post('SLMT/getBroadcastDataForClient', 'getBroadcastDataForClient');
+      });
