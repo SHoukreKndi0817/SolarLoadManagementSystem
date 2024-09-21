@@ -14,11 +14,11 @@ class BroadcastData extends Authenticatable
     use HasFactory, HasApiTokens;
 
     protected $primaryKey = 'broadcast_data_id';
-    protected $filabel = [
+    protected $fillable = [
         'broadcast_data_id',
         'battery_voltage',
-        'solar_power_generation',
-        'power_consumption',
+        'solar_power_generation(w)',
+        'power_consumption(w)',
         'battery_percentage',
         'electric',
         'status',

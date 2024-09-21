@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SLMT\BroadcastSLMTController;
 use App\Http\Controllers\SLMT\SendActionToSocketController;
 use App\Http\Controllers\Application\Client\ProfileController;
 use App\Http\Controllers\Application\Client\RateTechnicalExpert;
@@ -71,3 +72,9 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
       ->controller(SendActionToSocketController::class)->group(function () {
             Route::post('Phone/CheckPowerToSendAction', 'CheckPowerToSendAction');
       });
+
+//-----------------------------------------------------------------------
+//-----------SLMT Data reception-----------------------------------------
+Route::controller(BroadcastSLMTController::class)->group(function () {
+      Route::post('SLMT/addBroadcastData', 'addBroadcastData');
+});
