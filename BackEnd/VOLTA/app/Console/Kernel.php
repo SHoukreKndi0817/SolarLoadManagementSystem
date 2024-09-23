@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        // تنفيذ أمر CheckScheduledTasks كل دقيقة
         $schedule->command('tasks:check')->everyMinute();
+        $schedule->command('system:check-status')->everyMinute();
     }
 
     /**

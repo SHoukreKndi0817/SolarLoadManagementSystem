@@ -14,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Client extends Authenticatable
 {
-    use HasFactory, HasApiTokens,Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $primaryKey = 'client_id';
 
@@ -26,6 +26,7 @@ class Client extends Authenticatable
         'user_name',
         'password',
         'connection_code',
+        'telegram_chat',
         'technical_expert_id',
         'role',
         'is_active'
@@ -54,6 +55,11 @@ class Client extends Authenticatable
     {
         return $this->hasMany(Rating::class, 'client_id');
     }
+    public function Message()
+    {
+        return $this->hasMany(Messages::class, 'client_id');
+    }
+
     // Accessor لحساب عدد المنظومات الشمسية
     public function getTotalSolarSystemsAttribute()
     {

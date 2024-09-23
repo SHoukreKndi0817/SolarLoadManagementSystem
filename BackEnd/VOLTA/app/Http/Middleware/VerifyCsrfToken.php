@@ -54,6 +54,8 @@ class VerifyCsrfToken extends Middleware
         'api/Dash/ChangeSocketStatus',
         'api/Dash/DeleteBroadcastDevice',
         'api/Dash/GenerateQRCodeData',
+        'api/SLMT/addBroadcastData',
+        'web/api/telegram/webhook',
 
 
     ];

@@ -36,7 +36,7 @@ class CreateClient extends Controller
         try {
             $ClientData = $request->all();
             $ClientData['password'] = Hash::make($ClientData['password']);
-
+            $ClientData['telegram_chat'] = "0";
             //generate connection_code and check is unique-----------
             do {
                 $connection_code = strtoupper(Str::random(6));
