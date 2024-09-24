@@ -6,6 +6,7 @@ use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DashBoard\AdminClientCRUD;
 use App\Http\Controllers\DashBoard\ProfileController;
 use App\Http\Controllers\DashBoard\AdminEquipmentData;
+use App\Http\Controllers\DashBoard\HomePageController;
 use App\Http\Controllers\DashBoard\AdminEmployCRUDController;
 use App\Http\Controllers\DashBoard\BroadcastDeviceController;
 use App\Http\Controllers\DashBoard\AdmimTechnicalCRUDController;
@@ -93,13 +94,22 @@ Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')->controll
 //--------------------------------------------------------------------------------------------------
 //-------------------------------Broadcast Device CRUD and QRcode data------------------------------
 
-Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')->controller(BroadcastDeviceController::class)->group(function () {
-    Route::post('Dash/AddBroadcastDeviceData', 'AddBroadcastDeviceData');
-    Route::post('Dash/ShowAllDeviceBroadcast', 'ShowAllDeviceBroadcast');
-    Route::post('Dash/ShowDeviceBroadcast', 'ShowDeviceBroadcast');
-    Route::post('Dash/EditBroadcastDeviceData', 'EditBroadcastDeviceData');
-    Route::post('Dash/ChangeBroadcastDeviceStatus', 'ChangeBroadcastDeviceStatus');
-    Route::post('Dash/ChangeSocketStatus', 'ChangeSocketStatus');
-    Route::post('Dash/DeleteBroadcastDevice', 'DeleteBroadcastDevice');
-    Route::post('Dash/GenerateQRCodeData', 'GenerateQRCodeData');
-});
+Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')
+    ->controller(BroadcastDeviceController::class)->group(function () {
+        Route::post('Dash/AddBroadcastDeviceData', 'AddBroadcastDeviceData');
+        Route::post('Dash/ShowAllDeviceBroadcast', 'ShowAllDeviceBroadcast');
+        Route::post('Dash/ShowDeviceBroadcast', 'ShowDeviceBroadcast');
+        Route::post('Dash/EditBroadcastDeviceData', 'EditBroadcastDeviceData');
+        Route::post('Dash/ChangeBroadcastDeviceStatus', 'ChangeBroadcastDeviceStatus');
+        Route::post('Dash/ChangeSocketStatus', 'ChangeSocketStatus');
+        Route::post('Dash/DeleteBroadcastDevice', 'DeleteBroadcastDevice');
+        Route::post('Dash/GenerateQRCodeData', 'GenerateQRCodeData');
+    });
+
+
+//---------------------------------------------------------------------------------
+//--------------------------Home Page Data ---------------------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')
+    ->controller(HomePageController::class)->group(function () {
+        Route::post('Dash/getDashboardData', 'getDashboardData');
+    });

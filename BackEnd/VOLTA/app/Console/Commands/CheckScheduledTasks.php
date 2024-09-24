@@ -9,7 +9,7 @@ use App\Models\Inverter;
 use App\Models\BroadcastData;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
+use App\Events\ClientNotiEvent;
 
 class CheckScheduledTasks extends Command
 {
@@ -76,32 +76,29 @@ class CheckScheduledTasks extends Command
 
                 if ($broadcastData->electric == 'on') {
                     if ($totalPowerAfterDevice <= $inverterMaxPower) {
-                        // تشغيل الجهاز باستخدام الكهرباء الوطنية
-                        $this->sendCommandToSocket('on', $serialNumberForSocket);
-                        $this->info("Device {$device->device_name} turned on using grid power.");
+                        // إرسال رسالة أن الجهاز تم تشغيله باستخدام الكهرباء الوطنية
+                        $this->sendNotification("Device {$device->device_name} turned on using grid power.", $task->client_id);
                         $task->update(['status' => 'completed']);
                     } else {
-                        $this->error("Insufficient grid power to turn on the device (inverter limit exceeded).");
+                        $this->sendNotification("Insufficient grid power to turn on the device (inverter limit exceeded).", $task->client_id);
                     }
                 } elseif ($solarPowerGeneration > 0) {
                     // التحقق من الطاقة الشمسية
                     $remainingSolarPower = $solarPowerGeneration - $currentPowerConsumption;
 
                     if ($remainingSolarPower >= $devicePower && $totalPowerAfterDevice <= $inverterMaxPower) {
-                        // تشغيل الجهاز باستخدام الطاقة الشمسية
-                        $this->sendCommandToSocket('on', $serialNumberForSocket);
-                        $this->info("Device {$device->device_name} turned on using solar power.");
+                        // إرسال رسالة أن الجهاز تم تشغيله باستخدام الطاقة الشمسية
+                        $this->sendNotification("Device {$device->device_name} turned on using solar power.", $task->client_id);
                         $task->update(['status' => 'completed']);
                     } else {
                         // التحقق من استخدام البطارية بجانب الطاقة الشمسية
                         $totalAvailablePower = ($batteryAvailablePower + $solarPowerGeneration) - $currentPowerConsumption;
 
                         if ($totalAvailablePower >= $devicePower && $totalPowerAfterDevice <= $inverterMaxPower) {
-                            $this->sendCommandToSocket('on', $serialNumberForSocket);
-                            $this->info("Device {$device->device_name} turned on using solar and battery power.");
+                            $this->sendNotification("Device {$device->device_name} turned on using solar and battery power.", $task->client_id);
                             $task->update(['status' => 'completed']);
                         } else {
-                            $this->error("Insufficient solar and battery power to turn on the device.");
+                            $this->sendNotification("Insufficient solar and battery power to turn on the device.", $task->client_id);
                         }
                     }
                 } elseif ($broadcastData->electric == 'off' && $solarPowerGeneration == 0) {
@@ -109,34 +106,29 @@ class CheckScheduledTasks extends Command
                     $remainingBatteryPower = $batteryAvailablePower - $currentPowerConsumption;
 
                     if ($remainingBatteryPower >= $devicePower && $totalPowerAfterDevice <= $inverterMaxPower) {
-                        $this->sendCommandToSocket('on', $serialNumberForSocket);
-                        $this->info("Device {$device->device_name} turned on using battery power.");
+                        $this->sendNotification("Device {$device->device_name} turned on using battery power.", $task->client_id);
                         $task->update(['status' => 'completed']);
                     } else {
-                        $this->error("Insufficient battery power to turn on the device.");
+                        $this->sendNotification("Insufficient battery power to turn on the device.", $task->client_id);
                     }
                 }
             } catch (\Exception $e) {
-                $this->error("Error executing task: " . $e->getMessage());
+                $this->sendNotification("Error executing task: " . $e->getMessage(), $task->client_id);
             }
         }
     }
 
-    // دالة لإرسال الأوامر إلى الدارة
-    public function sendCommandToSocket($command, $serialNumberForSocket)
+    // دالة لإرسال الإشعارات باستخدام Pusher
+    public function sendNotification($message, $clientId)
     {
-        $url = "http://device-ip-address/control";
         $data = [
-            'command' => $command,
-            'serial_number' => $serialNumberForSocket
+            'message' => $message,
+            'time' => now(),
         ];
 
-        $response = Http::post($url, $data);
+        // إطلاق الحدث
+        event(new ClientNotiEvent($data, $clientId));
 
-        if ($response->successful()) {
-            return true;
-        } else {
-            return false;
-        }
+        $this->info("Notification sent to client {$clientId}: {$message}");
     }
 }

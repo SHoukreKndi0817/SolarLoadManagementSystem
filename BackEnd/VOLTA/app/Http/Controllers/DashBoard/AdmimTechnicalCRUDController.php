@@ -7,6 +7,7 @@ use App\Models\TechnicalExpert;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Validation\ValidationException;
 
 class AdmimTechnicalCRUDController extends Controller
@@ -36,6 +37,7 @@ class AdmimTechnicalCRUDController extends Controller
         $technicalExpertData['password'] = Hash::make($technicalExpertData['password']);
         // إنشاء الخبير التقني
         $technicalExpert = TechnicalExpert::create($technicalExpertData);
+      
         return response()->json([
             "msg" => "Technical Expert created successfully",
             "Technical Expert Data" => $technicalExpert
