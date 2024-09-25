@@ -53,6 +53,7 @@ class BroadcastSLMTController extends Controller
 
             return response()->json([
                 "msg" => "Successfully",
+                "status" => "on"
             ], 200, [], JSON_PRETTY_PRINT);
         } catch (\Exception $e) {
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);

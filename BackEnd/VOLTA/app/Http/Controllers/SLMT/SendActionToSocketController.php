@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SLMT;
 
+use App\Models\Socket;
 use App\Models\Battery;
 use App\Models\Inverter;
 use App\Models\HomeDevice;
@@ -9,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Models\BroadcastData;
 use App\Models\SolarSystemInfo;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
 class SendActionToSocketController extends Controller
@@ -134,18 +134,25 @@ class SendActionToSocketController extends Controller
     // دالة لإرسال الأوامر إلى الدارة
     public function sendCommandToSocket($command, $serialNumberForSocket)
     {
-        $url = "http://device-ip-address/control";
-        $data = [
-            'command' => $command,
-            'device_power' => $serialNumberForSocket
-        ];
+        // ابحث عن المقبس باستخدام serial_number
+        $socket = Socket::where('serial_number', $serialNumberForSocket)->first();
 
-        $response = Http::post($url, $data);
+        // تحقق من وجود المقبس
+        if ($socket) {
+            // تحديث حالة المقبس بناءً على الأمر
+            if ($command === 'on') {
+                $socket->status = 1; // تشغيل المقبس
+            } elseif ($command === 'off') {
+                $socket->status = 0; // إيقاف المقبس
+            } else {
+                return false; // إذا كان الأمر غير معروف
+            }
 
-        if ($response->successful()) {
-            return true;
+            $socket->save(); // حفظ التغيير في قاعدة البيانات
+
+            return true; // رجوع إذا تم التحديث بنجاح
         } else {
-            return false;
+            return false; // المقبس غير موجود
         }
     }
 }

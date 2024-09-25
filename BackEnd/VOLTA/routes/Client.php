@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SLMT\SendActionController;
 use App\Http\Controllers\SLMT\BroadcastSLMTController;
 use App\Http\Controllers\SLMT\ShowBroadcastDataController;
 use App\Http\Controllers\SLMT\SendActionToSocketController;
@@ -79,6 +80,11 @@ Route::middleware('auth:sanctum', 'CheckUserRole:client')
 //----Online Data From SLMT--------------------------------
 Route::controller(BroadcastSLMTController::class)->group(function () {
       Route::post('SLMT/addBroadcastData', 'addBroadcastData');
+});
+//-----------------------------------------------------------------------
+//----Send Action To SLMT--------------------------------
+Route::controller(SendActionController::class)->group(function () {
+      Route::post('SLMT/SendAction', 'SendAction');
 });
 //------------------------------------------------------------------------
 //----Show SLMT Data Online ------------------------------------
