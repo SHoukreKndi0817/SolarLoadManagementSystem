@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="photo/ico.ico">
+
+    <title>Solar System Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .data-table th {
+            background-color: #468c9b;
+            color: white;
+        }
+
+        .data-table td {
+            background-color: #f9f9f9;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Solar System Data for Client</h1>
+        <table class="data-table" id="solarDataTable">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Battery Voltage</td>
+                    <td id="batteryVoltage">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Solar Power Generation (W)</td>
+                    <td id="solarPowerGeneration">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Power Consumption (W)</td>
+                    <td id="powerConsumption">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Battery Percentage</td>
+                    <td id="batteryPercentage">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Electric</td>
+                    <td id="electric">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td id="status">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="error-message" id="errorMessage"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientId = 8;     
+            const token = sessionStorage.getItem('token');
+
+            if (!token) {
+                document.getElementById('errorMessage').textContent = 'Authorization token is missing. Please log in.';
+                return;
+            }
+
+            const apiUrl = `https://volta.sy/api/SLMT/getBroadcastDataForClients?solar_sys_info_id=${clientId}`;
+
+            const fetchData = () => {
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.msg === "Broadcast data retrieved successfully") {
+                        const data = result['Broadcast Data'];
+                        document.getElementById('batteryVoltage').textContent = data.battery_voltage + ' V';
+                        document.getElementById('solarPowerGeneration').textContent = data['solar_power_generation(w)'] + ' W';
+                        document.getElementById('powerConsumption').textContent = data['power_consumption(w)'] + ' W';
+                        document.getElementById('batteryPercentage').textContent = data.battery_percentage + ' %';
+                        document.getElementById('electric').textContent = data.electric === 1 ? 'On' : 'Off';
+                        document.getElementById('status').textContent = data.status === 1 ? 'Active' : 'Inactive';
+                    } else {
+                        document.getElementById('errorMessage').textContent = 'Failed to retrieve broadcast data: ' + result.msg;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('errorMessage').textContent = 'An error occurred while fetching data: ' + error.message;
+                });
+            };
+
+            fetchData();
+
+            setInterval(fetchData, 5000);
+        });
+    </script>
+</body>
+</html>

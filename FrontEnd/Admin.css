@@ -1,0 +1,901 @@
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+
+  background-color: #E4E9F7;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #579db8;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+.sidebar .logo-details {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar .logo-details .icon, .sidebar .logo-details .logo_name {
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open .logo-details .icon, .sidebar.open .logo-details .logo_name {
+  opacity: 1;
+}
+
+.sidebar .logo-details #btn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sidebar.open .logo-details #btn {
+  text-align: right;
+}
+
+.sidebar i {
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+
+.sidebar .nav-list {
+  margin-top: 20px;
+  height: 100%;
+}
+
+.sidebar li {
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+
+.sidebar li .tooltip {
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #579db8;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+
+.sidebar li:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip {
+  display: none;
+}
+
+.sidebar input {
+  font-size: 15px;
+  color: black;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: white;
+}
+
+.sidebar.open input {
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+
+.sidebar .bx-search {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: white;
+  color: #FFF;
+}
+
+.sidebar .bx-search:hover {
+  background: #FFF;
+  color: #579db8;
+}
+
+.sidebar li a {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #579db8;
+}
+
+.sidebar li a:hover {
+  background: #FFF;
+}
+
+.sidebar li a .links_name {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+
+.sidebar.open li a .links_name {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar li a:hover .links_name, .sidebar li a:hover i {
+  color: #579db8;
+}
+
+.sidebar li i {
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+
+.sidebar li.profile {
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: white;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.sidebar.open li.profile {
+  width: 250px;
+}
+
+.sidebar li .profile-details {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.sidebar li img {
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.sidebar li.profile .name, .sidebar li.profile .job {
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.sidebar li.profile .job {
+  font-size: 12px;
+}
+
+.sidebar .profile #log_out {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: white;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #log_out {
+  width: 50px;
+  background: none;
+}
+
+.home-section {
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.sidebar.open ~ .home-section {
+  left: 250px;
+  width: calc(100% - 250px);
+}
+
+.home-section .text {
+  display: inline-block;
+  color: #579db8;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
+
+@media (max-width: 420px) {
+  .sidebar li .tooltip {
+    display: none;
+  }
+}
+
+.expert-section {
+  padding: 20px;
+}
+
+.expert-section button {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.expert-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.expert-section table, th, td {
+  border: 1px solid #ddd;
+}
+
+.expert-section th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+.expert-section th {
+  background-color: #f2f2f2;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 12px;
+  gap: 8px;
+  height: 55px;
+  width: 150px;
+  border: none;
+  background: rgb(74, 180, 50);
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  width: 100px;
+}
+
+.lable {
+  line-height: 22px;
+  font-size: 17px;
+  color: #fff;
+  margin-left: 20px;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.button .span {
+  border-radius: 50%;
+  background-color: rgb(74, 180, 50);
+  padding: 10px;
+  position: absolute;
+  left: 0;
+}
+
+.button:hover {
+  background: rgb(48, 129, 29);
+}
+
+.button:hover .svg-icon {
+  animation: slope 0.8s linear infinite;
+}
+
+@keyframes slope {
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+#btn-dele {
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  height: 55px;
+  width: 120px;
+  font-size: 20px;
+}
+
+#btn-dele:hover {
+  color: white;
+  background-color: #579db8;
+  box-shadow: 3px 3px 3px 3px gray;
+}
+
+.device-section {
+  padding: 20px;
+}
+
+.device-section .button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 12px 25px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.device-section .button:hover {
+  background-color: #0056b3;
+}
+
+.device-section .svg-icon {
+  margin-right: 8px;
+}
+
+.device-section .lable {
+  font-weight: 600;
+}
+
+.device-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+.device-section table, th, td {
+  border: 1px solid #ddd;
+}
+
+.device-section th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+.device-section th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+.device-section tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.device-section tr:hover {
+  background-color: #f1f1f1;
+}
+/* start admin btn style */
+/* Common button styling */
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: white;
+}
+
+/* Edit button styling */
+
+
+
+
+
+
+/* Add button styling */
+.button {
+  background-color: #008CBA; /* #579db8 */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+}
+
+.button:hover {
+  background-color: #007bb5; /* Darker #579db8 */
+}
+
+/* Add icon within button */
+.button .svg-icon {
+  fill: white;
+}
+
+/* Disable focus outline */
+button:focus {
+  outline: none;
+}
+/* Add Expert button styling */
+.btn-add-expert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #007bb5; /* Primary color that matches the page's theme */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px; /* Rounded corners for a softer appearance */
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for a lifted effect */
+}
+
+.btn-add-expert i {
+  font-size: 1.2em; /* Slightly larger icon */
+}
+
+.btn-add-expert:hover {
+  transform: translateY(-2px); /* Lift button slightly on hover */
+}
+
+.btn-add-expert:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 3px rgba(0, 123, 181, 0.4); /* Highlight on focus */
+}
+
+/* Add Device button styling */
+.btn-add-device {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #28a745; /* Green color for action */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px; /* Rounded corners */
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow */
+}
+
+.btn-add-device i {
+  font-size: 1.2em; /* Icon size */
+}
+
+.btn-add-device:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.btn-add-device:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 3px rgba(40, 167, 69, 0.4); /* Green focus ring */
+}
+
+
+
+    .btn-edit {
+        background-color:#468c9b;
+         width:"100px";/* لون أزرق */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 5px;
+    }
+
+ 
+
+    .btn-toggle {
+        background-color: #28a745; /* لون أخضر */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-toggle.deactivate {
+        background-color: #dc3545; /* لون أحمر للإيقاف */
+        width: 120px;
+        text-align: center;
+    }
+
+    .btn-toggle.deactivate:hover {
+        background-color: #c82333; /* لون أحمر أغمق عند المرور */
+    }
+
+    .btn-toggle.activate {
+        background-color: #28a745; /* لون أخضر للتفعيل */
+    }
+
+    .btn-toggle.activate:hover {
+        background-color: #218838; /* لون أخضر أغمق عند المرور */
+    }
+    .admin-section {
+      padding: 20px;
+    }
+    
+    .admin-section table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+    
+    .admin-section table, th, td {
+      border: 1px solid #ddd;
+    }
+    
+    .admin-section th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    
+    .admin-section th {
+      background-color: #f2f2f2;
+    }
+    
+    .admin-section tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .admin-section tr:hover {
+      background-color: #f1f1f1;
+    }
+    
+    /* Buttons for actions */
+    .admin-section .btn-edit {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    
+    .admin-section .btn-remove {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    
+    .admin-section .btn-edit:hover {
+      background-color: #45a049;
+    }
+    
+    .admin-section .btn-remove:hover {
+      background-color: #da190b;
+    }
+    /* Styling for the table container */
+.Panel-section {
+  margin: 20px;
+}
+
+/* General table styling */
+#PanelTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+/* Header styling */
+#PanelTable thead {
+  background-color:#F2F2F2 ;
+  color: black;
+}
+
+#PanelTable th {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Body styling */
+#PanelTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#PanelTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Hover effect for rows */
+#PanelTable tbody tr:hover {
+  background-color: #ddd;
+}
+
+/* Action button styling */
+#PanelTable button {
+  background-color: #579db8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#PanelTable button:hover {
+  background-color: #468c9b;
+}
+/* safkfdsnsa */
+#inveterTable thead {
+  background-color:#F2F2F2 ;
+  color: black;
+}
+
+#inveterTable th {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Body styling */
+#inveterTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#inveterTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Hover effect for rows */
+#inveterTable tbody tr:hover {
+  background-color: #ddd;
+}
+
+/* Action button styling */
+#inveterTable button {
+  background-color: #579db8;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#inveterTable button:hover {
+  background-color: #468c9b;
+}
+
+  .approve-btn, .reject-btn {
+    width: 100px;
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px; /* Rounded corners for a modern look */
+    color: white;
+    font-size: 16px; /* Consistent font size */
+    cursor: pointer;
+    margin: 5px; /* Space between buttons */
+    transition: background-color 0.3s ease;
+  }
+
+  .approve-btn {
+    width: 100px; /* Approve button color */
+  }
+
+  .approve-btn:hover {
+    background-color: #357a7a; /* Darker shade on hover */
+  }
+
+  .reject-btn {
+    background-color: red; /* Reject button color */
+  }
+
+  .reject-btn:hover {
+    background-color: #d32f2f; /* Darker shade on hover */
+  }
+
+  #showandhide_table_Broadcast_Device {
+    margin: 0 auto;
+    width: 90%;
+    padding: 20px;
+  }
+  
+  .Broadcast_Device-section {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+  }
+  
+  .text {
+    font-size: 30px;
+
+    color: #579db8;
+    font-weight: bold;
+    
+  }
+  
+  .btn-add-expert {
+    display: inline-flex;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  thead {
+    background-color: aliceblue;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  .swal2-select {
+    display: block;
+    padding: .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+    margin-bottom: .75rem;
+}
+/* Add this to your CSS */
+/* التأثير على جميع الأزرار */
+button {
+  background-color: #468c9b; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  font-size: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+button i {
+  margin-right: 5px; /* إضافة مسافة بين الأيقونة والنص */
+}
+
+button:hover {
+  transform: scale(1.05); /* تكبير الزر قليلاً */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4); /* إضافة ظل */
+}
+
+button:active {
+  transform: scale(0.88); /* تقليص الزر عند الضغط */
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(300px, 1fr)); /* زيادة الحجم الأدنى إلى 300px */
+  gap: 20px;
+  padding: 20px;
+  max-width: 1000px;
+  width: 100%;
+  margin-left: 380px;
+
+}
+
+/* تنسيق البطاقات */
+.card {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* تحسين الظل */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px; /* زيادة الحشو */
+  transition: transform 0.3s;
+}
+
+/* عند التحويم بالماوس */
+.card:hover {
+  transform: translateY(-10px);
+}
+
+/* تنسيق canvas */
+canvas {
+  width: 250px; /* زيادة العرض */
+  height: 250px; /* زيادة الارتفاع */
+}
+
+/* تنسيق عنوان البطاقات */
+h3 {
+  font-size: 22px; /* زيادة حجم الخط */
+  margin-bottom: 10px;
+  color: #333;
+}
+
+

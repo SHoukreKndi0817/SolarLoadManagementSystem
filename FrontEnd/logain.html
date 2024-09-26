@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Welcome...</title>
+    <link rel="stylesheet" href="logain.css">
+    <link rel="icon" href="photo/ico.ico">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+<body>
+    <div id="container" class="container sign-in">
+        <!-- FORM SECTION -->
+        <div class="row">
+            <!-- SIGN UP -->
+            <div class="col align-items-center flex-col sign-up">
+                <div class="form-wrapper align-items-center">
+                    <div class="form sign-up">
+                        <div class="input-group">
+                            <i class='bx bxs-user'></i>
+                            <input id="sign-up-username" type="text" placeholder="Username" oninput="validateUsername()">
+                            <span id="username-error" class="error-message"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bx-mail-send'></i>
+                            <input id="sign-up-email" type="email" placeholder="Email" oninput="validateEmail()">
+                            <span id="email-error" class="error-message"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input id="sign-up-password" type="password" placeholder="Password" oninput="validatePassword()">
+                            <span id="password-error" class="error-message"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input id="sign-up-confirm-password" type="password" placeholder="Confirm password" oninput="validateConfirmPassword()">
+                            <span id="confirm-password-error" class="error-message"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input id="sign-up-code" type="password" placeholder="Enter your code" maxlength="8" oninput="validateCode()">
+                            <span id="code-error" class="error-message"></span>
+                        </div>
+                        <button id="sign-up-btn" onclick="handleSignUp()">
+                            Sign up
+                        </button>
+                        <p>
+                            <span>
+                                Already have an account?
+                            </span>
+                            <b
+                                style="color: rgb(0, 157, 255);"
+                                onclick="toggle()"
+                                class="pointer">
+                                Sign in here
+                            </b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- END SIGN UP -->
+            <!-- SIGN IN -->
+            <div class="col align-items-center flex-col sign-in">
+                <div class="form-wrapper align-items-center">
+                    <div class="form sign-in">
+                        <div class="input-group">
+                            <i class='bx bxs-user'></i>
+                            <input id="sign-in-username" type="text" placeholder="Username" oninput="validateSignInUsername()">
+                            <span id="sign-in-username-error" class="error-message"></span>
+                        </div>
+            
+                        <div class="input-group">
+                            <i class='bx bxs-lock-alt'></i>
+                            <input id="sign-in-password" type="password" placeholder="Password" oninput="validateSignInPassword()">
+                            <span id="sign-in-password-error" class="error-message"></span>
+                        </div>
+                        <button id="sign-in-btn" >
+                            Sign in
+                        </button>
+                        <p>
+                            <b>
+                            </b>
+                        </p>
+                        <p>
+                            <span>
+ 
+                            </span>
+                            <b
+                                style="color: rgb(0, 157, 255);"
+                                onclick="toggle()"
+                                class="pointer">
+                         
+                            </b>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-wrapper">
+                </div>
+            </div>
+            <!-- END SIGN IN -->
+        </div>
+        <!-- END FORM SECTION -->
+        <!-- CONTENT SECTION -->
+        <div class="row content-row">
+            <!-- SIGN IN CONTENT -->
+            <div class="col align-items-center flex-col">
+                <div class="text sign-in">
+                    <h2>
+                        Welcome in VoltA
+                    </h2>
+                </div>
+                <div class="img sign-in">
+                </div>
+            </div>
+            <!-- END SIGN IN CONTENT -->
+            <!-- SIGN UP CONTENT -->
+            <div class="col align-items-center flex-col">
+                <div class="img sign-up">
+                </div>
+                <div class="text sign-up">
+                    <h2>
+                        Join with us
+                    </h2>
+                </div>
+            </div>
+            <!-- END SIGN UP CONTENT -->
+        </div>
+        <!-- END CONTENT SECTION -->
+    </div>
+    <script src="logain.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

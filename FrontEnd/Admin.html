@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Admin page</title>
+  <link rel="stylesheet" href="Admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="photo/ico.ico">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <div class="logo_name">
+        <img width="50px" height="50px" src="photo/solarpanel.ico" alt="">
+      </div>
+      <div class="logo_name" style="font-size: 40px; font-weight: 800; color: white; margin-left: 20px; font-family: sa; ">Volt<span style="color:yellow; font-family: sa; ">A</span></div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list">
+      <li style="display: none;">
+        <i style="color:black" class='bx bx-search'></i>
+        <input type="text" placeholder="Search...">
+        <span class="tooltip">Search</span>
+      </li>
+      <li>
+        <a href="#" id="chart">
+          <i class="fas fa-chart-line"></i>
+          <span class="links_name">Home page</span>
+        </a>
+        <span class="tooltip">Home page</span>
+      </li>
+      <li>
+        <a href="#" id="Add_expert">
+          <i class="fas fa-user-cog"></i>
+          <span class="links_name">View experts</span>
+        </a>
+        <span class="tooltip">View experts</span>
+      </li>
+      <li>
+        <a href="#" id="User">
+          <i class='fas fa-user-tie'></i>
+          <span class="links_name"> View Admins</span>
+        </a>
+        <span class="tooltip">View Admins</span>
+      </li>
+      <li>
+        <a href="#" id="Client">
+          <i class='fas fa-user'></i>
+          <span class="links_name"> View Clients</span>
+        </a>
+        <span class="tooltip">View Clients</span>
+      </li>
+      <li>
+        <a href="#" id="panel">
+          <i class="fa-solid fa-solar-panel"></i>
+          <span class="links_name">View panels</span>
+        </a>
+        <span class="tooltip">View panels</span>
+      </li>
+      <li>
+        <a href="#" id="Battery">
+          <i class="fa-solid fa-battery-half"></i>
+          <span class="links_name">View Batteries</span>
+        </a>
+        <span class="tooltip">View Batteries</span>
+      </li>
+      <li>
+        <a href="#" id="Inverter">
+          <i class="fa-sharp-duotone fa-solid fa-server"></i>
+          <span class="links_name">View Inverters</span>
+        </a>
+        <span class="tooltip">View Inverters</span>
+      </li>
+      <li>
+        <a href="#" id="Equipment">
+          <i class='fa-sharp fa-solid fa-list-check'></i>
+          <span class="links_name">Equipment Request</span>
+        </a>
+        <span class="tooltip">Equipment Request</span>
+      </li>
+      <li>
+        <a href="#" id="Setting">
+          <i class='fas fa-broadcast-tower'></i>
+          <span class="links_name">Broadcast Device </span>
+        </a>
+        <span class="tooltip">Broadcast Device </span>
+      </li>
+      <li>
+        <a href="#" id="logout" style="margin-top: 340px;">
+          <i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
+         <span  class="links_name">logout</span>
+        </a>
+        <span class="tooltip">logout</span>
+      </li>
+
+  </div>
+
+  <div class="main-content">
+    <div id="showandhide" style="display: none;">
+      <section class="home-section">
+        <div class="text">Expert's details</div>
+        <div class="expert-section">
+          <button class="btn-add-expert" onclick="addExpert()">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Add Expert</span>
+          </button>
+
+          <table id="expertTable">
+            <thead>
+              <tr>
+                
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Home Address</th>
+                <th>Username</th>
+                <th style="display: none  ;">Status</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Expert rows will be added here dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div id="showandhide_table_device" style="display: none;">
+      <section class="home-section">
+        <div class="text">Battery Details</div>
+        <div class="device-section">
+          <button class="btn-add-device" onclick="addBattery()">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Battery</span>
+          </button>
+    
+          <table id="deviceTable">
+            <thead>
+              <tr>
+
+            <th>Battery Type</th>
+            <th>Battery Capacity</th>
+            <th>Maximum Watt Battery</th>
+            <th>Absorb Stage Volts</th>
+            <th>Float Stage Volts</th>
+            <th>Equalize Stage Volts</th>
+            <th>Equalize Interval Days</th>
+            <th>Setting Switches</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Battery rows will be added here dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    
+    <div id="showandhide_table_Admin" style="display: none;">
+      <div class="admin-section" style="margin-left: 100px;">
+          <div class="text" style="font-size: 30px; color:#579db8">Admin details</div>
+          <div class="device-section">
+              <button class="btn-add-device" onclick="addAdmin()">
+                <i class="fa-solid fa-user-plus"></i>                  
+                  <span>Add Admin</span>
+              </button>
+              <table id="adminTable">
+                  <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Phone Number</th>
+                          <th>Username</th>
+                          <th>Role</th>
+                          <th>Status</th>
+                          <th>Created At</th>
+                          <th>Updated At</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <!-- Admin data will be inserted here -->
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  
+  <div  id="showandhide_table_client" style="display: none;"  >
+    <div class="admin-section" style="margin-left: 100px;">
+        <div class="text" style="font-size: 30px; color:#579db8">Client details</div>
+        <div class="device-section">
+            <table id="ClientTable">
+                <thead>
+                    <tr>
+               
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Username</th>
+                        <th>Home Address</th>
+                        <th >technical_expert</th>
+                        <th>Connection Code</th>
+                        <th >Action</th>
+                    </tr>
+                </thead>
+                <tbody id="clientTableBody">
+                    <!-- Client data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="hidepannel" style="display: none;">
+<div id="showandhide_table_Pannel" style="display: none;">
+  <div class="Panel-section" style="margin-left: 100px;">
+      <div class="text" style="font-size: 30px; color:#579db8">Panel details</div>
+      
+      <button style="background-color: green;" id="Add_pannel"> <i class="fa-solid fa-plus"></i> Add Panel</button>
+      <div class="Panel-section">
+          <table id="PanelTable">
+              <thead >
+                  <tr>
+                      
+                      <th>Manufacturer</th>
+                      <th>Model</th>
+                      <th>Max Power Output (Watt)</th>
+                      <th>Cell Type</th>
+                      <th>Efficiency</th>
+                      <th>Panel Type</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody id="panelTableBody">
+                  <!-- Panel data will be inserted here -->
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+</div>
+<div id="showandhide_table_inveter" style="display:none;">
+  <div class="Inverter-section" style="margin-left: 100px;">
+    <div class="text" style="font-size: 30px; color: #579db8; padding: 30px;">Inverter Details</div>
+    <button style="background-color: green; color: white;" id="Add_Inverter"><i class="fa-solid fa-plus"></i>  Add Inverter</button>
+    <div class="inveter-section">
+      <table id="inveterTable">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Operating Temperature</th>
+            <th>Rated Power (Watt)</th>
+            <th>DC Input</th>
+            <th>AC Output</th>
+            <th>AC Charger Input</th>
+            <th>AC Charger Output</th>
+            <th>DC Output</th>
+            <th>Action</th>
+
+          </tr>
+        </thead>
+        <tbody id="inveter">
+          <!-- Inverter data will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="hideEquipment" style="display: none; ">
+<div id="showandhide_table_Equipment_Request" style="display:none;">
+  <div class="Equipment_Request-section" style="margin-left: 100px;">
+    <div class="text" style="font-size: 30px; padding: 30px; color: #579db8;">Equipment Request</div>
+    <div class="Equipment_Request-section">
+      <table id="Equipment_RequestTable" style="background-color: white; border-collapse: collapse;">
+        <thead style="background-color: aliceblue;" >
+          <th>Technical Expert Name</th>
+          <th>Client Name</th>
+          <th>Number of Broadcast Devices</th>
+          <th>Number of Ports</th>
+          <th>Number of Sockets</th>
+          <th>Number of Panels</th>
+          <th>Number of Batteries</th>
+          <th>Number of Inverters</th>
+          <th>Additional Equipment</th>
+          <th>Status</th>
+          <th>Comments</th>
+          <th>Created At</th>
+          <th>View Request Details</th>
+        </thead>
+        <tbody id="Equipment_Request">
+          <!-- Inverter data will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="hideBroadcast_Device" style="display: none;">
+  <div class="text" style=" margin-left: 100px; padding: 30px; font-size: 30px;  color: #579db8 ;">Broadcast_Device</div>
+  <div id="showandhide_table_Broadcast_Device" >
+    <div class="Broadcast_Device-section">
+      
+      <div class="Broadcast_Device-section">
+<button class="btn-add-expert" onclick="addBroadcastDevice()">
+  <i class="fa-solid fa-plus"></i>
+  <span>Add Broadcast Device</span>
+</button>
+
+        </button>
+        <table id="Broadcast_DevicetTable" style="background-color: white; border-collapse: collapse;">
+          <thead style="background-color: aliceblue;">
+            <tr>
+              <th>Model</th>
+              <th>Version</th>
+              <th>Wired Ports</th>
+              <th>Wireless Ports</th>
+              <th>IP Address</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="Broadcast_Device">
+            <!-- بيانات أجهزة البث سيتم إدخالها هنا -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="hide-Chart" style="display: block;">
+  <div class="text" style=" margin-left: 100px; padding: 30px; font-size: 30px;  color: #579db8 ;">Home page </div>
+   
+
+  <div class="dashboard">
+    <div class="card">
+      <canvas id="batteryChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="inverterChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="panelChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="clientChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="technicalExpertChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="requestEquipmentChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="broadcastDeviceChart"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="solarSystemChart"></canvas>
+    </div>
+  </div>
+
+  
+  </div>
+  
+  
+</div>
+  <script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  <script src="Admin.js"></script>
+</body>
+</html> 

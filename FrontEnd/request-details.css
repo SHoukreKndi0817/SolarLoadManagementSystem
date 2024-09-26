@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #468c9b;
+  }
+  
+  #request-details-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .text-bold{
+    font-weight: bolder;
+  }
+  .back-button {
+    background-color: #007bff; /* لون أزرق */
+    font-size: 20px; /* حجم الخط */
+    padding: 15px 30px; /* تكبير الزر */
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #0056b3; /* لون أغمق عند التمرير */
+}
