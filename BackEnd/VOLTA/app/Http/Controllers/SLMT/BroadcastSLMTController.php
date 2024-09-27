@@ -38,7 +38,7 @@ class BroadcastSLMTController extends Controller
                 );
             }
 
-            // تحديث أو إنشاء سجل في BroadcastData بناءً على broadcast_device_id
+            //  تحديث أو إنشاء سجل في BroadcastData بناءً على broadcast_device_id
             $broadcastData = BroadcastData::updateOrCreate(
                 ['broadcast_device_id' => $broadcastDevice->broadcast_device_id], // الشرط
                 [

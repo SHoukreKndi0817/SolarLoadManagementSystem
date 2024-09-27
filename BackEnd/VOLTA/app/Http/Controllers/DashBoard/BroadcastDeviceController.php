@@ -155,7 +155,7 @@ class BroadcastDeviceController extends Controller
                 'number_of_wired_port' => 'sometimes|required|integer|min:0',
                 'number_of_wireless_port' => 'sometimes|required|integer|min:0',
                 'ip_addrees' => ['sometimes', 'required', 'string', 'unique:broadcast_devices,ip_addrees,'
-                    . $request->broadcast_device_id . ',broadcast_device_id', 'ip'], // تغيير mac_address إلى ip_addrees
+                    . $request->broadcast_device_id . ',broadcast_device_id', 'ip'],
                 'sockets' => 'sometimes|required|array',
                 'sockets.*.socket_id' => 'required|exists:sockets,socket_id',
                 'sockets.*.socket_model' => 'sometimes|required|string|max:255',

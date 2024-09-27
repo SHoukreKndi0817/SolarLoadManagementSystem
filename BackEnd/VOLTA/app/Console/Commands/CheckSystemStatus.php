@@ -1,10 +1,10 @@
 <?php
 
-
 namespace App\Console\Commands;
 
 use App\Models\BroadcastData;
 use App\Models\Inverter;
+use App\Models\Socket;
 use App\Events\ClientNotiEvent;
 use App\Models\Battery;
 use Illuminate\Console\Command;
@@ -20,9 +20,6 @@ class CheckSystemStatus extends Command
     public function handle()
     {
         while (true) {
-
-
-
             $broadcastDataList = BroadcastData::with('BroadcastDevice.SolarSystemInfo')->get();
 
             foreach ($broadcastDataList as $broadcastData) {
@@ -32,32 +29,60 @@ class CheckSystemStatus extends Command
                 $Battery = Battery::find($solarSystem->battery_id);
 
                 // 1. التحقق من البطارية
-                if ($broadcastData->battery_voltage < 11.00) {
-                    $this->sendAlert("low battery level!  Battery voltage: {$broadcastData->battery_voltage}V", $clientId);
+                if ($broadcastData->battery_voltage < 11.10) {
+                    // تغيير حالة جميع المقابس إلى 0 باستثناء المقبس الذي يحمل اسم "إنذار"
+                    $sockets = $broadcastData->BroadcastDevice->Socket;
+                    foreach ($sockets as $socket) {
+                        $socket->status = ($socket->socket_name === 'alarm') ? 1 : 0;
+                        $socket->save();
+                    }
+
+                    // إرسال الإنذار
+                    $this->sendAlert("Low battery level! Battery voltage: {$broadcastData->battery_voltage}V", $clientId);
                 }
 
-                // 2. التحقق من استهلاك الطاقة مقارنة بالطاقة المتاحة
-                $totalAvailablePower = $broadcastData->solar_power_generation + ($broadcastData->battery_voltage * 100);
-                if ($broadcastData->power_consumption > $totalAvailablePower) {
-                    $this->sendAlert("Power consumption exceeds available power! Consumption: {$broadcastData->power_consumption}W, Available power: {$totalAvailablePower}W", $clientId);
+                // 2. التحقق من استهلاك الطاقة مقارنة بقدرة الانفرتر
+                elseif ($broadcastData['power_consumption(w)'] > ($inverter->invert_mode_rated_power - 200)) {
+                    // تغيير حالة جميع المقابس إلى 0 باستثناء المقبس الذي يحمل اسم "إنذار"
+                    $sockets = $broadcastData->BroadcastDevice->Socket;
+                    foreach ($sockets as $socket) {
+                        $socket->status = ($socket->socket_name === 'alarm') ? 1 : 0;
+                        $socket->save();
+                    }
+
+                    // إرسال الإنذار
+                    $power_consumption = $broadcastData['power_consumption(w)'];
+                    $Inverterpower = $inverter->invert_mode_rated_power - 200;
+                    $this->sendAlert("Power consumption exceeded inverter limit! Consumption: {$power_consumption}W, Inverter limit: {$Inverterpower}W", $clientId);
                 }
 
-                // 3. التحقق من استهلاك الطاقة مقارنة بقدرة الانفرتر
-                if ($broadcastData->power_consumption > $inverter->invert_mode_rated_power) {
-                    $this->sendAlert("Power consumption exceeded inverter limit! Consumption: {$broadcastData->power_consumption}W, Inverter limit: {$inverter->invert_mode_rated_power}W", $clientId);
-                }
+                // 3. التحقق من الشحن الزائد للبطارية
+                elseif ($broadcastData->battery_voltage > $Battery->float_stage_volts) {
+                    // تغيير حالة جميع المقابس إلى 0 باستثناء المقبس الذي يحمل اسم "إنذار"
+                    $sockets = $broadcastData->BroadcastDevice->Socket;
+                    foreach ($sockets as $socket) {
+                        $socket->status = ($socket->socket_name === 'alarm') ? 1 : 0;
+                        $socket->save();
+                    }
 
-                // 5. التحقق من الشحن الزائد للبطارية
-                if ($broadcastData->battery_voltage > $Battery->float_stage_volts) {
+                    // إرسال الإنذار
                     $this->sendAlert("Battery overcharge detected! Voltage: {$broadcastData->battery_voltage}V", $clientId);
                 }
 
-                // 6. التحقق من مستوى البطارية
-                if ($broadcastData->battery_percentage < 20) {
+                // 4. التحقق من مستوى البطارية
+                elseif ($broadcastData->battery_percentage < 22) {
+                    // تغيير حالة جميع المقابس إلى 0 باستثناء المقبس الذي يحمل اسم "إنذار"
+                    $sockets = $broadcastData->BroadcastDevice->Socket;
+                    foreach ($sockets as $socket) {
+                        $socket->status = ($socket->socket_name === 'alarm') ? 1 : 0;
+                        $socket->save();
+                    }
+
+                    // إرسال الإنذار
                     $this->sendAlert("Low battery level! Battery at {$broadcastData->battery_percentage}%", $clientId);
                 }
             }
-            sleep(6);
+            sleep(6);  // تأخير التنفيذ لعدد معين من الثواني
         }
     }
 

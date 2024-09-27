@@ -105,45 +105,4 @@ class RateTechnicalExpert extends Controller
             return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
-
-    // public function UpdateTechnicalExpertRating(Request $request)
-    // {
-    //     // التحقق من صحة البيانات المدخلة
-    //     try {
-    //         $validatedData = $request->validate([
-    //             'rating_id' => 'required|exists:ratings,rating_id',
-    //             'rate' => 'sometimes|required|integer|min:1|max:5', // التقييم يجب أن يكون بين 1 و 5
-    //             'commet' => 'sometimes|nullable|string|max:255',
-    //         ]);
-    //     } catch (ValidationException $e) {
-    //         return response()->json(["msg" => $e->validator->errors()->first()], 422, [], JSON_PRETTY_PRINT);
-    //     }
-
-    //     try {
-    //         // جلب التقييم الحالي
-    //         $existingRating = Rating::where('rating_id', $validatedData['rating_id'])->first();
-
-    //         // تحديث التقييم
-    //         $existingRating->update($validatedData);
-
-    //         // جلب معلومات العميل المرتبطة بالتقييم (تأكد من وجود علاقة بين التقييم والعميل)
-    //         $client = $existingRating->client; // تأكد من أن هناك علاقة مثل belongsTo بين Rating و Client
-
-    //         // إعداد البيانات لإرسال الإشعار
-    //         $notificationData = [
-    //             'message' => 'تم تعديل بيانات الخبير الفني.',
-    //             'rating' => $existingRating->rate,  // يمكنك إرسال تفاصيل التقييم الجديد
-    //         ];
-    //         // إرسال إشعار كحدث للبث عبر Pusher
-    //         event(new NewNotificationEvent($notificationData, null, null, $client->client_id));
-
-    //         // الاستجابة الناجحة
-    //         return response()->json([
-    //             "msg" => "Rating updated successfully",
-    //             "Updated Rating Data" => $existingRating,
-    //         ], 200, [], JSON_PRETTY_PRINT);
-    //     } catch (\Exception $e) {
-    //         return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
-    //     }
-    // }
 }

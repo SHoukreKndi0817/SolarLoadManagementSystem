@@ -15,8 +15,6 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('tasks:check')->everyMinute();
         $schedule->command('system:check-status')->everyMinute();
-        // $schedule->command('system:check-status2')->everyMinute();
-
     }
 
     /**

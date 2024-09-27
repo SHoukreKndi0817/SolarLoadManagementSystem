@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DashBoard;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Models\SolarSystemInfo;
 use App\Models\TechnicalExpert;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
@@ -156,6 +157,40 @@ class AdminClientCRUD extends Controller
             ], 409, [], JSON_PRETTY_PRINT);
         } catch (\Exception $e) {
             return response()->json(["msg" => 'Failed to deactivate account'], 500, [], JSON_PRETTY_PRINT);
+        }
+    }
+
+
+    //---------------------------------------------------------------------------------------
+    //-------Show All Solar System You Associated With it------------------------------
+
+    public function ShowAllSolarSystemYouAssociated(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'client_id' => 'required|exists:clients,client_id',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json(["msg" => $e->validator->errors()->first()], 422, [], JSON_PRETTY_PRINT);
+        }
+
+        try {
+            $AllSolarSYstemYouHad = SolarSystemInfo::with('Inverter', 'Battery', 'Panel')->where('client_id', $validatedData['client_id'])
+                ->get();
+            if ($AllSolarSYstemYouHad->isNotEmpty()) {
+                return response()->json(
+                    [
+                        'msg' => 'Succesfly',
+                        'All Solar System You Have' => $AllSolarSYstemYouHad,
+
+                    ],
+                    200,
+                    [],
+                    JSON_PRETTY_PRINT
+                );
+            } else return response()->json(['msg' => 'Not Found Any Solar System You Associated With Him '], 404, [], JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
+            return response()->json(["msg" => $e->getMessage()], 500, [], JSON_PRETTY_PRINT);
         }
     }
 }

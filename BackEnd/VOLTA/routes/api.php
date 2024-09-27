@@ -7,9 +7,11 @@ use App\Http\Controllers\DashBoard\AdminClientCRUD;
 use App\Http\Controllers\DashBoard\ProfileController;
 use App\Http\Controllers\DashBoard\AdminEquipmentData;
 use App\Http\Controllers\DashBoard\HomePageController;
+use App\Http\Controllers\SLMT\ShowBroadcastDataController;
 use App\Http\Controllers\DashBoard\AdminEmployCRUDController;
 use App\Http\Controllers\DashBoard\BroadcastDeviceController;
 use App\Http\Controllers\DashBoard\AdmimTechnicalCRUDController;
+use App\Http\Controllers\Test\test;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,7 @@ Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')->controll
     Route::post('Dash/EditClientData', 'EditClientData');
     Route::post('Dash/DeactivateClient', 'DeactivateClient');
     Route::post('Dash/ActivateClient', 'ActivateClient');
+    Route::post('Dash/ShowAllSolarSystemYouAssociated', 'ShowAllSolarSystemYouAssociated');
 });
 
 //---------------------------Add Equipment data-----------------------
@@ -113,3 +116,60 @@ Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')
     ->controller(HomePageController::class)->group(function () {
         Route::post('Dash/getDashboardData', 'getDashboardData');
     });
+
+//------------------------------------------------------------------------
+//----Show SLMT Data Online ------------------------------------
+Route::middleware('auth:sanctum', 'CheckUserRole:employe,super_admin')
+    ->controller(ShowBroadcastDataController::class)->group(function () {
+        Route::post('SLMT/getBroadcastDataForClients', 'getBroadcastDataForClient');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------------
+//-------Test ---------------------------------------------------------
+Route::controller(test::class)->group(function () {
+    Route::post('test/TestAlarmDown', 'TestAlarmDown');
+    Route::post('test/TestAlarmUp', 'TestAlarmUp');
+    Route::post('test/Turnon', 'Turnon');
+    Route::post('test/Turnon', 'Turnon');
+    Route::post('test/Voltn', 'Voltn');
+});
